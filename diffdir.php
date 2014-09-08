@@ -27,6 +27,8 @@ for( $i = 0; $i < count($argv); $i ++ ){
 }
 
 print '-- starting "diffdir" --'."\n";
+print '$before = '.$before."\n";
+print '$after = '.$after."\n";
 $diffdir = new tomk79\diffdir( $before, $after, array('output'=>$path_output_dir) );
 if( $diffdir->is_error() ){
 	print 'ERROR.'."\n";
@@ -38,3 +40,4 @@ if( $diffdir->is_error() ){
 }
 print ''."\n";
 print 'bye;'."\n";
+print ''."\n";
