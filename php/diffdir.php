@@ -111,6 +111,10 @@ class diffdir{
 						$this->after.$repo['path'] ,
 						$this->conf['output'].'/pickup/'.$repo['path']
 					);
+
+					// 差分を知らせるHTMLを生成
+					$this->save_diff_report_html( $repo );
+
 					break;
 			}
 		}
@@ -228,6 +232,66 @@ class diffdir{
 			}
 		}
 
+		return true;
+	}
+
+	/**
+	 * save diff report HTML
+	 */
+	private function save_diff_report_html( $repo ){
+		if( $repo['after_info']['type'] != 'file' ){
+			return false;
+		}
+
+		$diff = new \cogpowered\FineDiff\Diff;
+		ob_start(); ?>
+<!DOCTYPE html>
+<html>
+<head>
+<title>diff: <?= htmlspecialchars($repo['path']); ?></title>
+<style>
+	body{
+		color:#333;
+		margin:0;
+		padding:0;
+	}
+	.theme_outline{
+		margin:1em 1em;
+	}
+	.theme_outline pre{
+		padding:1em;
+		background-color:#f5f5f5;
+		border:1px solid #999;
+	}
+	ins{
+		color:#000;
+		background-color:#dfd;
+		text-decoration:none;
+	}
+	del{
+		color:#f00;
+		background-color:#fdd;
+		text-decoration:none;
+	}
+</style>
+</head>
+<body>
+<div class="theme_outline">
+<h1><?= htmlspecialchars($repo['path']); ?></h1>
+<div class="contents">
+<pre><?= $diff->render(
+	@$this->fs->read_file( $this->before.$repo['path'] ),
+	@$this->fs->read_file( $this->after.$repo['path'] )
+) ?></pre>
+</div>
+</div>
+</body>
+</html>
+<?php
+		$src_html_diff = ob_get_clean();
+		$path_diffHtml = $this->conf['output'].'/report/diff/'.$repo['path'].'.diff.html';
+		$this->fs->mkdir_r( dirname( $path_diffHtml ) );
+		$this->fs->save_file( $path_diffHtml, $src_html_diff );
 		return true;
 	}
 
