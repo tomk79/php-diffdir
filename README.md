@@ -1,31 +1,19 @@
 diffdir
 =======
 
+## Install
+
+```
+$ composer create-project tomk79/diffdir ./diffdir/
+```
+
 ## Usage
 
-Define `tomk79/diffdir` in your `composer.json`.
+Basic usage.
 
 ```
-{
-    "require": {
-        "php": ">=5.3.0",
-        "tomk79/diffdir": "dev-master"
-    }
-}
+$ php ./diffdir/diffdir.php {$path_dirA} {$path_dirB}
 ```
-
-Execute `composer install` command.
-
-```
-$ composer install
-```
-
-Or update command.
-
-```
-$ composer update
-```
-
 
 
 ## Test
