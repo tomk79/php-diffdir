@@ -85,6 +85,7 @@ class diffdir{
 		if( !$this->mkdir( $this->conf['output'].'/pickup/', __FILE__, __LINE__ ) ){ return false; }
 		if( !$this->mkdir( $this->conf['output'].'/report/', __FILE__, __LINE__ ) ){ return false; }
 
+		$html_list = '';
 		$csv = array();
 		foreach( $this->get_reports() as $repo ){
 			array_push( $csv, array(
@@ -111,15 +112,19 @@ class diffdir{
 						$this->after.$repo['path'] ,
 						$this->conf['output'].'/pickup/'.$repo['path']
 					);
-
-					// 差分を知らせるHTMLを生成
-					$this->save_diff_report_html( $repo );
-
 					break;
 			}
+
+			// 差分を知らせるHTMLを生成
+			$this->save_diff_report_html( $repo );
+			$html_list .= '<li class="'.htmlspecialchars($repo['status']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>';
 		}
 		$src_csv = $this->fs->mk_csv( $csv );
 		$this->fs->save_file($this->conf['output'].'/report/diffdir.csv', $src_csv);
+
+
+		// 差分を知らせるHTMLのindex.htmlを生成
+		$this->save_diff_report_index_html($html_list);
 
 		return true;
 	}
@@ -132,14 +137,24 @@ class diffdir{
 		$files = array();
 		if( $this->fs->is_dir( $this->before.$localpath ) ){
 			foreach( $this->fs->ls( $this->before.$localpath ) as $tmp_filename ){
-				if( !array_search( $tmp_filename, $files) ){
+				switch( basename($tmp_filename) ){
+					case '.DS_Store':
+					case 'Thumbs.db':
+						continue 2;
+				}
+				if( array_search( $tmp_filename, $files) === false ){
 					array_push( $files, $tmp_filename );
 				}
 			}
 		}
 		if( $this->fs->is_dir( $this->after.$localpath ) ){
 			foreach( $this->fs->ls( $this->after.$localpath ) as $tmp_filename ){
-				if( !array_search( $tmp_filename, $files) ){
+				switch( basename($tmp_filename) ){
+					case '.DS_Store':
+					case 'Thumbs.db':
+						continue 2;
+				}
+				if( array_search( $tmp_filename, $files) === false ){
 					array_push( $files, $tmp_filename );
 				}
 			}
@@ -236,13 +251,100 @@ class diffdir{
 	}
 
 	/**
+	 * save diff report index HTML
+	 */
+	private function save_diff_report_index_html( $html_list ){
+		ob_start();?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>diffdir</title>
+		<style type="text/css">
+			html, body{
+				margin:0;padding:0;
+				background-color:#fff;
+				color:#333;
+			}
+			#outline{
+				width:auto;
+				max-height:100%;
+				overflow: hidden;
+			}
+			#diffpreview{
+				float:right;
+				width:73%;
+				max-height:100%;
+			}
+			#diffpreview iframe{
+				width:100%;
+			}
+			#difflist{
+				float:left;
+				overflow:auto;
+				width:25%;
+				max-height:100%;
+			}
+			#difflist li a{
+				color:#000;
+				text-decoration:none;
+			}
+			#difflist li.changed a{
+				background-color:#dfd;
+			}
+			#difflist li.changed a:before{
+				content:"[U]";
+			}
+			#difflist li.created a{
+				background-color:#dfd;
+			}
+			#difflist li.created a:before{
+				content:"[A]";
+				color:#f90;
+			}
+			#difflist li.deleted a{
+				color:#f00;
+				background-color:#fdd;
+			}
+			#difflist li.deleted a:before{
+				content:"[D]";
+			}
+		</style>
+		<script>
+			(function(){
+				function refresh(){
+					var outline = document.getElementById('outline');
+					var diffpreview = document.getElementById('diffpreview');
+					var iframe = document.getElementById('iframe');
+					var difflist = document.getElementById('difflist');
+
+					outline.style.height = window.innerHeight+'px';
+					iframe.height = window.innerHeight;
+				}
+				window.onload = refresh;
+				window.onresize = refresh;
+			})();
+		</script>
+	</head>
+	<body>
+		<div id="outline">
+			<div id="diffpreview">
+				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
+			</div>
+			<div id="difflist">
+				<ul><?= $html_list; ?></ul>
+			</div>
+		</div>
+	</body>
+</html>
+<?php
+		$html_list = ob_get_clean();
+		$this->fs->save_file($this->conf['output'].'/report/index.html', $html_list);
+	}
+
+	/**
 	 * save diff report HTML
 	 */
 	private function save_diff_report_html( $repo ){
-		if( $repo['after_info']['type'] != 'file' ){
-			return false;
-		}
-
 		$diff = new \cogpowered\FineDiff\Diff;
 		ob_start(); ?>
 <!DOCTYPE html>
