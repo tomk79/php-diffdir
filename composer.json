@@ -1,6 +1,6 @@
 {
     "name": "tomk79/diffdir",
-    "description": "file system utility.",
+    "description": "2つのディレクトリを比較し、検出された差分をレポートしてくれるコマンドです。ライブラリとしても利用できます。",
     "keywords": [],
     "license": "MIT",
     "authors": [

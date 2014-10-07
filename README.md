@@ -4,7 +4,9 @@ diffdir
 ## Install
 
 ```
-$ composer create-project tomk79/diffdir ./diffdir/
+$ mkdir diffdir
+$ cd diffdir
+$ composer create-project tomk79/diffdir ./
 ```
 
 ## Usage
@@ -12,7 +14,13 @@ $ composer create-project tomk79/diffdir ./diffdir/
 Basic usage.
 
 ```
-$ php ./diffdir/diffdir.php {$path_dirA} {$path_dirB}
+$ php ./diffdir.php {$path_dirA} {$path_dirB}
+```
+
+Exsample of diff sample data.
+
+```
+$ php ./diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
 ```
 
 
