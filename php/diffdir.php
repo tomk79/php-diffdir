@@ -13,6 +13,8 @@ namespace tomk79;
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
 class diffdir{
+	// $ php ./diffdir.php -o "./_output/" ./php/tests/sample_a/ ./php/tests/sample_b/
+	// $ rm -r _output/
 
 	private $fs;
 	private $before, $after, $conf = array();
@@ -78,6 +80,7 @@ class diffdir{
 	 * executing diffdir command
 	 */
 	private function execute(){
+		$htmlreport = new \tomk79\diffdir\htmlreport( $this->fs, $this->before, $this->after, $this->conf );
 		$this->diffdir();
 
 		// reporting...
@@ -116,15 +119,15 @@ class diffdir{
 			}
 
 			// 差分を知らせるHTMLを生成
-			$this->save_diff_report_html( $repo );
-			$html_list .= '<li class="'.htmlspecialchars($repo['status']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>';
+			$htmlreport->save_diff_report_html( $repo );
+			$html_list .= '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>';
 		}
 		$src_csv = $this->fs->mk_csv( $csv );
 		$this->fs->save_file($this->conf['output'].'/report/diffdir.csv', $src_csv);
 
 
 		// 差分を知らせるHTMLのindex.htmlを生成
-		$this->save_diff_report_index_html($html_list);
+		$htmlreport->save_diff_report_index_html($html_list);
 
 		return true;
 	}
@@ -247,153 +250,6 @@ class diffdir{
 			}
 		}
 
-		return true;
-	}
-
-	/**
-	 * save diff report index HTML
-	 */
-	private function save_diff_report_index_html( $html_list ){
-		ob_start();?>
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>diffdir</title>
-		<style type="text/css">
-			html, body{
-				margin:0;padding:0;
-				background-color:#fff;
-				color:#333;
-			}
-			#outline{
-				width:auto;
-				max-height:100%;
-				overflow: hidden;
-			}
-			#diffpreview{
-				float:right;
-				width:73%;
-				max-height:100%;
-			}
-			#diffpreview iframe{
-				width:100%;
-			}
-			#difflist{
-				float:left;
-				overflow:auto;
-				width:25%;
-				max-height:100%;
-			}
-			#difflist li a{
-				color:#000;
-				text-decoration:none;
-			}
-			#difflist li.changed a{
-				background-color:#dfd;
-			}
-			#difflist li.changed a:before{
-				content:"[U]";
-			}
-			#difflist li.created a{
-				background-color:#dfd;
-			}
-			#difflist li.created a:before{
-				content:"[A]";
-				color:#f90;
-			}
-			#difflist li.deleted a{
-				color:#f00;
-				background-color:#fdd;
-			}
-			#difflist li.deleted a:before{
-				content:"[D]";
-			}
-		</style>
-		<script>
-			(function(){
-				function refresh(){
-					var outline = document.getElementById('outline');
-					var diffpreview = document.getElementById('diffpreview');
-					var iframe = document.getElementById('iframe');
-					var difflist = document.getElementById('difflist');
-
-					outline.style.height = window.innerHeight+'px';
-					iframe.height = window.innerHeight;
-				}
-				window.onload = refresh;
-				window.onresize = refresh;
-			})();
-		</script>
-	</head>
-	<body>
-		<div id="outline">
-			<div id="diffpreview">
-				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
-			</div>
-			<div id="difflist">
-				<ul><?= $html_list; ?></ul>
-			</div>
-		</div>
-	</body>
-</html>
-<?php
-		$html_list = ob_get_clean();
-		$this->fs->save_file($this->conf['output'].'/report/index.html', $html_list);
-	}
-
-	/**
-	 * save diff report HTML
-	 */
-	private function save_diff_report_html( $repo ){
-		$diff = new \cogpowered\FineDiff\Diff;
-		ob_start(); ?>
-<!DOCTYPE html>
-<html>
-<head>
-<title>diff: <?= htmlspecialchars($repo['path']); ?></title>
-<style>
-	body{
-		color:#333;
-		margin:0;
-		padding:0;
-	}
-	.theme_outline{
-		margin:1em 1em;
-	}
-	.theme_outline pre{
-		padding:1em;
-		background-color:#f5f5f5;
-		border:1px solid #999;
-	}
-	ins{
-		color:#000;
-		background-color:#dfd;
-		text-decoration:none;
-	}
-	del{
-		color:#f00;
-		background-color:#fdd;
-		text-decoration:none;
-	}
-</style>
-</head>
-<body>
-<div class="theme_outline">
-<h1><?= htmlspecialchars($repo['path']); ?></h1>
-<div class="contents">
-<pre><?= $diff->render(
-	@$this->fs->read_file( $this->before.$repo['path'] ),
-	@$this->fs->read_file( $this->after.$repo['path'] )
-) ?></pre>
-</div>
-</div>
-</body>
-</html>
-<?php
-		$src_html_diff = ob_get_clean();
-		$path_diffHtml = $this->conf['output'].'/report/diff/'.$repo['path'].'.diff.html';
-		$this->fs->mkdir_r( dirname( $path_diffHtml ) );
-		$this->fs->save_file( $path_diffHtml, $src_html_diff );
 		return true;
 	}
 

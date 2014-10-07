@@ -12,13 +12,16 @@
     ],
     "require": {
         "php": ">=5.3.0" ,
-        "tomk79/filesystem": "0.1.*" ,
+        "tomk79/filesystem": "0.2.*" ,
         "cogpowered/finediff": "0.3.*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.1.*"
     },
     "autoload": {
-        "files": ["php/diffdir.php"]
+        "files": [
+            "php/diffdir.php" ,
+            "php/htmlreport.php"
+        ]
     }
 }
