@@ -34,6 +34,7 @@ class htmlreport{
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8" />
 		<title>diffdir</title>
 		<style type="text/css">
 			html, body{
@@ -76,12 +77,12 @@ class htmlreport{
 				background-color:#dfd;
 			}
 			#difflist li.changed a:before{
-				content:"[U]";
+				content:"[C]";
 			}
-			#difflist li.created a{
+			#difflist li.added a{
 				background-color:#dfd;
 			}
-			#difflist li.created a:before{
+			#difflist li.added a:before{
 				content:"[A]";
 				color:#f90;
 			}
@@ -134,6 +135,7 @@ class htmlreport{
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8" />
 <title>diff: <?= htmlspecialchars($repo['path']); ?></title>
 <style>
 <?= file_get_contents( __DIR__.'/fess-1.1.2.css' ); ?>
@@ -177,9 +179,13 @@ class htmlreport{
 
 <div class="unit">
 <?php if( $repo['before_info']['type'] == 'file' || $repo['after_info']['type'] == 'file' ){ ?>
+<?php
+	$bin_before = @$this->fs->read_file( $this->before.$repo['path'] );
+	$bin_after  = @$this->fs->read_file( $this->after.$repo['path'] );
+?>
 	<div class="code"><pre><code><?= $diff->render(
-	@$this->fs->read_file( $this->before.$repo['path'] ),
-	@$this->fs->read_file( $this->after.$repo['path'] )
+	mb_convert_encoding( $bin_before, 'UTF-8', 'UTF-8,'.mb_detect_order()),
+	mb_convert_encoding( $bin_after , 'UTF-8', 'UTF-8,'.mb_detect_order())
 ) ?></code></pre></div>
 <?php }else{ ?>
 	<p>This item is a directory.</p>
