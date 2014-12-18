@@ -212,8 +212,13 @@ class htmlreport{
 <?php foreach( $repo['before_info'] as $key=>$val ){ ?>
 	<tr>
 		<th><?= htmlspecialchars($key) ?></th>
-		<td><?= htmlspecialchars((strlen($repo['before_info'][$key])?$repo['before_info'][$key]:'---')) ?></td>
-		<td><?= htmlspecialchars((strlen($repo['after_info'][$key])?$repo['after_info'][$key]:'---')) ?></td>
+		<?php if($key=='timestamp'){ ?>
+			<td><?= htmlspecialchars((strlen($repo['before_info'][$key])?@date('Y-m-d H:i:s',$repo['before_info'][$key]):'---')) ?></td>
+			<td><?= htmlspecialchars((strlen($repo['after_info'][$key])?@date('Y-m-d H:i:s',$repo['after_info'][$key]):'---')) ?></td>
+		<?php }else{ ?>
+			<td><?= htmlspecialchars((strlen($repo['before_info'][$key])?$repo['before_info'][$key]:'---')) ?></td>
+			<td><?= htmlspecialchars((strlen($repo['after_info'][$key])?$repo['after_info'][$key]:'---')) ?></td>
+		<?php } ?>
 	</tr>
 <?php } ?>
 </table>

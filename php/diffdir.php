@@ -101,12 +101,14 @@ class diffdir{
 				@date('Y-m-d H:i:s', $repo['before_info']['timestamp']) ,
 				$repo['before_info']['md5'] ,
 				$repo['before_info']['encoding'] ,
+				$repo['before_info']['crlf'] ,
 
 				$repo['after_info']['type'] ,
 				$repo['after_info']['size'] ,
 				@date('Y-m-d H:i:s', $repo['after_info']['timestamp']) ,
 				$repo['after_info']['md5'] ,
 				$repo['after_info']['encoding'] ,
+				$repo['after_info']['crlf'] ,
 			) );
 
 			switch( $repo['status'] ){
@@ -178,74 +180,93 @@ class diffdir{
 				'timestamp'=>null ,
 				'md5'=>null ,
 				'encoding'=>null ,
+				'crlf'=>null ,
 			);
 			$after_info = $before_info;
 
+			$realpath_before = $this->fs->get_realpath( $this->before.$localpath.$tmp_filename );
+			$realpath_after  = $this->fs->get_realpath( $this->after .$localpath.$tmp_filename );
+
 			if( $this->fs->is_file($this->before.$localpath.$tmp_filename) && $this->fs->is_file($this->after.$localpath.$tmp_filename) ){
 				// 両方ファイルだったら、md5比較
-				$before_info['md5'] = md5_file( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$after_info['md5']  = md5_file( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
-				$before_info['encoding'] = mb_detect_encoding( $this->fs->read_file( $this->before.$localpath.$tmp_filename ) );
-				$after_info['encoding']  = mb_detect_encoding( $this->fs->read_file( $this->after .$localpath.$tmp_filename ) );
-				$before_info['size'] = filesize( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$after_info['size']  = filesize( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
-				$before_info['timestamp'] = filemtime( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$after_info['timestamp']  = filemtime( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
+				$before_info['md5'] = md5_file( $realpath_before );
+				$after_info['md5']  = md5_file( $realpath_after  );
+				$before_info['encoding'] = mb_detect_encoding( $this->fs->read_file( $realpath_before ) );
+				$after_info['encoding']  = mb_detect_encoding( $this->fs->read_file( $realpath_after  ) );
+				$before_info['crlf'] = $this->detect_cr_lf( $this->fs->read_file( $realpath_before ) );
+				$after_info['crlf']  = $this->detect_cr_lf( $this->fs->read_file( $realpath_after  ) );
+				$before_info['size'] = filesize( $realpath_before );
+				$after_info['size']  = filesize( $realpath_after  );
+				$before_info['timestamp'] = filemtime( $realpath_before );
+				$after_info['timestamp']  = filemtime( $realpath_after  );
 				$before_info['type'] = 'file';
 				$after_info['type']  = 'file';
-				if( $before_info['md5'] !== $after_info['md5'] ){
-					$status = 'changed';
+				if( $this->conf['strip_crlf'] ){
+					if(
+						md5( preg_replace( '/\r\n|\r|\n/', '', $this->fs->read_file( $realpath_before ) ) ) !==
+						md5( preg_replace( '/\r\n|\r|\n/', '', $this->fs->read_file( $realpath_after  ) ) )
+						){
+						$status = 'changed';
+					}
+				}else{
+					if( $before_info['md5'] !== $after_info['md5'] ){
+						$status = 'changed';
+					}
 				}
-			}elseif( $this->fs->is_dir($this->before.$localpath.$tmp_filename) && $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
+			}elseif( $this->fs->is_dir($realpath_before) && $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
 				// 両方ディレクトリだったら
-				$before_info['timestamp'] = filemtime( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$after_info['timestamp']  = filemtime( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
+				$before_info['timestamp'] = filemtime( $realpath_before );
+				$after_info['timestamp']  = filemtime( $realpath_after  );
 				$before_info['type'] = 'dir';
 				$after_info['type']  = 'dir';
-			}elseif( $this->fs->is_file($this->before.$localpath.$tmp_filename) && !$this->fs->file_exists($this->after.$localpath.$tmp_filename) ){
+			}elseif( $this->fs->is_file($realpath_before) && !$this->fs->file_exists($this->after.$localpath.$tmp_filename) ){
 				// before がファイルで、after が存在しなかったら
 				$status = 'deleted';
-				$before_info['md5'] = md5_file( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$before_info['encoding'] = mb_detect_encoding( $this->fs->read_file( $this->before.$localpath.$tmp_filename ) );
-				$before_info['size'] = filesize( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$before_info['timestamp'] = filemtime( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
+				$before_info['md5'] = md5_file( $realpath_before );
+				$before_info['encoding'] = mb_detect_encoding( $this->fs->read_file( $realpath_before ) );
+				$before_info['crlf'] = $this->detect_cr_lf( $this->fs->read_file( $realpath_before ) );
+				$before_info['size'] = filesize( $realpath_before );
+				$before_info['timestamp'] = filemtime( $realpath_before );
 				$before_info['type'] = 'file';
-			}elseif( $this->fs->is_dir($this->before.$localpath.$tmp_filename) && !$this->fs->file_exists($this->after.$localpath.$tmp_filename) ){
+			}elseif( $this->fs->is_dir($realpath_before) && !$this->fs->file_exists($this->after.$localpath.$tmp_filename) ){
 				// before がディレクトリで、after が存在しなかったら
 				$status = 'deleted';
-				$before_info['timestamp'] = filemtime( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
+				$before_info['timestamp'] = filemtime( $realpath_before );
 				$before_info['type'] = 'dir';
-			}elseif( !$this->fs->file_exists($this->before.$localpath.$tmp_filename) && $this->fs->is_file($this->after.$localpath.$tmp_filename) ){
+			}elseif( !$this->fs->file_exists($realpath_before) && $this->fs->is_file($this->after.$localpath.$tmp_filename) ){
 				// before が存在しなくて、after がファイルだったら
 				$status = 'added';
-				$after_info['md5']  = md5_file( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
-				$after_info['encoding']  = mb_detect_encoding( $this->fs->read_file( $this->after .$localpath.$tmp_filename ) );
-				$after_info['size']  = filesize( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
-				$after_info['timestamp']  = filemtime( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
+				$after_info['md5']  = md5_file( $realpath_after  );
+				$after_info['encoding']  = mb_detect_encoding( $this->fs->read_file( $realpath_after  ) );
+				$after_info['crlf']  = $this->detect_cr_lf( $this->fs->read_file( $realpath_after  ) );
+				$after_info['size']  = filesize( $realpath_after  );
+				$after_info['timestamp']  = filemtime( $realpath_after  );
 				$after_info['type']  = 'file';
-			}elseif( !$this->fs->file_exists($this->before.$localpath.$tmp_filename) && $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
+			}elseif( !$this->fs->file_exists($realpath_before) && $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
 				// before が存在しなくて、after がディレクトリだったら
 				$status = 'added';
-				$after_info['timestamp']  = filemtime( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
+				$after_info['timestamp']  = filemtime( $realpath_after  );
 				$after_info['type']  = 'dir';
-			}elseif( $this->fs->is_file($this->before.$localpath.$tmp_filename) && $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
+			}elseif( $this->fs->is_file($realpath_before) && $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
 				// before がファイルで、after がディレクトリだったら
 				$status = 'changed';
-				$before_info['md5'] = md5_file( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$before_info['encoding'] = mb_detect_encoding( $this->fs->read_file( $this->before.$localpath.$tmp_filename ) );
-				$before_info['size'] = filesize( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$before_info['timestamp'] = filemtime( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$after_info['timestamp']  = filemtime( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
+				$before_info['md5'] = md5_file( $realpath_before );
+				$before_info['encoding'] = mb_detect_encoding( $this->fs->read_file( $realpath_before ) );
+				$before_info['crlf'] = $this->detect_cr_lf( $this->fs->read_file( $realpath_before ) );
+				$before_info['size'] = filesize( $realpath_before );
+				$before_info['timestamp'] = filemtime( $realpath_before );
+				$after_info['timestamp']  = filemtime( $realpath_after  );
 				$before_info['type'] = 'file';
 				$after_info['type']  = 'dir';
-			}elseif( $this->fs->is_dir($this->before.$localpath.$tmp_filename) && $this->fs->is_file($this->after.$localpath.$tmp_filename) ){
+			}elseif( $this->fs->is_dir($realpath_before) && $this->fs->is_file($this->after.$localpath.$tmp_filename) ){
 				// before がディレクトリで、after がファイルだったら
 				$status = 'changed';
-				$after_info['md5']  = md5_file( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
-				$after_info['encoding']  = mb_detect_encoding( $this->fs->read_file( $this->after .$localpath.$tmp_filename ) );
-				$after_info['size']  = filesize( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
-				$before_info['timestamp'] = filemtime( $this->fs->get_realpath( $this->before.$localpath.$tmp_filename ) );
-				$after_info['timestamp']  = filemtime( $this->fs->get_realpath( $this->after .$localpath.$tmp_filename ) );
+				$after_info['md5']  = md5_file( $realpath_after  );
+				$after_info['encoding']  = mb_detect_encoding( $this->fs->read_file( $realpath_after  ) );
+				$after_info['crlf']  = $this->detect_cr_lf( $this->fs->read_file( $realpath_after  ) );
+				$after_info['size']  = filesize( $realpath_after  );
+				$before_info['timestamp'] = filemtime( $realpath_before );
+				$after_info['timestamp']  = filemtime( $realpath_after  );
 				$before_info['type'] = 'dir';
 				$after_info['type']  = 'file';
 			}else{
@@ -255,7 +276,7 @@ class diffdir{
 			$this->report( $localpath.$tmp_filename, $status, $before_info, $after_info );
 
 			// 両方またはどちらか一方がディレクトリだったら再帰的に掘る
-			if( $this->fs->is_dir($this->before.$localpath.$tmp_filename) || $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
+			if( $this->fs->is_dir($realpath_before) || $this->fs->is_dir($this->after.$localpath.$tmp_filename) ){
 				$this->diffdir( $localpath.$tmp_filename.'/' );
 			}
 		}
@@ -272,6 +293,29 @@ class diffdir{
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * detect CR/LF
+	 */
+	private function detect_cr_lf( $text ){
+		$memo = array();
+		// $memo = array('CRLF'=>false, 'CR'=>false, 'LF'=>false);
+		if( preg_match('/\r\n/', $text) ){
+			$memo['CRLF'] = true;
+		}
+		$text = preg_replace('/\r\n/', '', $text);
+		if( preg_match('/\r/', $text) ){
+			$memo['CR'] = true;
+		}
+		if( preg_match('/\n/', $text) ){
+			$memo['LF'] = true;
+		}
+		$rtn = implode( '/', array_keys( $memo ));
+		if( !strlen($rtn) ){
+			$rtn = 'unknown';
+		}
+		return $rtn;
 	}
 
 	/**

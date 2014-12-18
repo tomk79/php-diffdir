@@ -13,23 +13,26 @@ $argv = $_SERVER['argv'];
 array_shift($argv);
 $after = array_pop($argv);
 $before = array_pop($argv);
-$path_output_dir = null;
+$conf = array('output'=>null, 'strip_crlf'=>false);
 
 for( $i = 0; $i < count($argv); $i ++ ){
 	if( $argv[$i] == '-o' ){
-		if( preg_match( '/^\-[a-zA-Z0-9]$/s', $argv[$i+1] ) ){
+		if( preg_match( '/^\-[a-zA-Z0-9\-\_]+$/s', $argv[$i+1] ) ){
 			continue;
 		}
 		$i++;
-		$path_output_dir = $argv[$i];
+		$conf['output'] = $argv[$i];
 		continue;
+	}
+	if( $argv[$i] == '--strip-crlf' ){
+		$conf['strip_crlf'] = true;
 	}
 }
 
 print '-- starting "diffdir" --'."\n";
 print '$before = '.$before."\n";
 print '$after = '.$after."\n";
-$diffdir = new tomk79\diffdir( $before, $after, array('output'=>$path_output_dir) );
+$diffdir = new tomk79\diffdir( $before, $after, $conf );
 if( $diffdir->is_error() ){
 	print 'ERROR.'."\n";
 	var_dump( $diffdir->get_errors() );
