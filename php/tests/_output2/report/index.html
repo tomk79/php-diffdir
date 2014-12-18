@@ -28,9 +28,14 @@
 				width:25%;
 				max-height:100%;
 			}
+			#difflist ul{
+				padding: 10px;
+				margin: 0;
+			}
 			#difflist li{
 				margin-top:1px;
 				margin-bottom:1px;
+				list-style-type:none;
 			}
 			#difflist li.dir{
 				background-color:#f5f5f5;
@@ -43,22 +48,25 @@
 			#difflist li.changed a{
 				background-color:#dfd;
 			}
-			#difflist li.changed a:before{
+			#difflist li.changed a:after{
 				content:"[C]";
+				margin-left:0.5em;
 			}
 			#difflist li.added a{
 				background-color:#dfd;
 			}
-			#difflist li.added a:before{
+			#difflist li.added a:after{
 				content:"[A]";
 				color:#f90;
+				margin-left:0.5em;
 			}
 			#difflist li.deleted a{
 				color:#f00;
 				background-color:#fdd;
 			}
-			#difflist li.deleted a:before{
+			#difflist li.deleted a:after{
 				content:"[D]";
+				margin-left:0.5em;
 			}
 		</style>
 		<script>
