@@ -216,15 +216,20 @@ class htmlreport{
 		case 'htm':
 		case 'xhtml':
 		case 'xhtm':
+		case 'js':
+		case 'css':
 		case 'xml':
-		case 'md':
-		case 'mm':
+		case 'svg':
 		case 'csv':
 		case 'rss':
 		case 'rdf':
 		case 'inc':
 		case 'text':
 		case 'txt':
+		case 'php':
+		case 'cgi':
+		case 'md':
+		case 'mm':
 			?>
 	<div class="code"><pre><code><?= $diff->render(
 	mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
