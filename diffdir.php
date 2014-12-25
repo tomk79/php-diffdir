@@ -13,7 +13,7 @@ $argv = $_SERVER['argv'];
 array_shift($argv);
 $after = array_pop($argv);
 $before = array_pop($argv);
-$conf = array('output'=>null, 'strip_crlf'=>false);
+$conf = array('output'=>null, 'strip_crlf'=>false, 'verbose'=>false);
 
 for( $i = 0; $i < count($argv); $i ++ ){
 	if( $argv[$i] == '-o' ){
@@ -26,21 +26,30 @@ for( $i = 0; $i < count($argv); $i ++ ){
 	}
 	if( $argv[$i] == '--strip-crlf' ){
 		$conf['strip_crlf'] = true;
+		continue;
+	}
+	if( $argv[$i] == '-v' ){
+		$conf['verbose'] = true;
+		continue;
 	}
 }
 
-print '-- starting "diffdir" --'."\n";
-print '$before = '.$before."\n";
-print '$after = '.$after."\n";
-$diffdir = new tomk79\diffdir( $before, $after, $conf );
-if( $diffdir->is_error() ){
-	print 'ERROR.'."\n";
-	var_dump( $diffdir->get_errors() );
-}else{
-	print 'success.'."\n";
-	print ''."\n";
-	print 'see: '.$diffdir->get_output_dir()."\n";
+if( $conf['verbose'] ){
+	print '-- starting "diffdir" --'."\n";
+	print '$before = '.$before."\n";
+	print '$after = '.$after."\n";
 }
-print ''."\n";
-print 'bye;'."\n";
-print ''."\n";
+$diffdir = new tomk79\diffdir( $before, $after, $conf );
+if( $conf['verbose'] ){
+	if( $diffdir->is_error() ){
+		print 'ERROR.'."\n";
+		var_dump( $diffdir->get_errors() );
+	}else{
+		print 'success.'."\n";
+		print ''."\n";
+		print 'see: '.$diffdir->get_output_dir()."\n";
+	}
+	print ''."\n";
+	print 'bye;'."\n";
+	print ''."\n";
+}

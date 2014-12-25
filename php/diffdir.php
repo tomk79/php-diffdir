@@ -111,6 +111,7 @@ class diffdir{
 				$repo['after_info']['crlf'] ,
 			) );
 
+			$this->verbose( $repo['path'] );
 			switch( $repo['status'] ){
 				case 'changed':
 				case 'added':
@@ -359,6 +360,18 @@ class diffdir{
 	 */
 	public function get_errors(){
 		return $this->errors;
+	}
+
+	/**
+	 * verbose
+	 * @param string $msg Message string.
+	 * @return bool true
+	 */
+	public function verbose( $msg ){
+		if( $this->conf['verbose'] ){
+			print $msg."\n";
+		}
+		return true;
 	}
 
 	/**

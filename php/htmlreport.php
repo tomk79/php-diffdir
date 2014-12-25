@@ -190,11 +190,32 @@ class htmlreport{
 <?php
 	$bin_before = @$this->fs->read_file( $this->before.$repo['path'] );
 	$bin_after  = @$this->fs->read_file( $this->after.$repo['path'] );
-?>
+	$ext = @$this->fs->get_extension( $repo['path'] );
+	switch( strtolower( $ext ) ){
+		case 'html':
+		case 'htm':
+		case 'xhtml':
+		case 'xhtm':
+		case 'xml':
+		case 'md':
+		case 'mm':
+		case 'csv':
+		case 'rss':
+		case 'rdf':
+		case 'inc':
+		case 'text':
+		case 'txt':
+			?>
 	<div class="code"><pre><code><?= $diff->render(
 	mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
 	mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order())
-) ?></code></pre></div>
+) ?></code></pre></div><?php
+			break;
+		default:
+			print '<p>比較できない拡張子です。</p>';
+			break;
+	}
+?>
 <?php }else{ ?>
 	<p>This item is a directory.</p>
 <?php } ?>

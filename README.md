@@ -33,7 +33,7 @@ $ php ./diffdir/diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
 
 ### オプション
 
-#### -o = 結果の出力先ディレクトリを指定する
+#### -o 結果の出力先ディレクトリを指定する
 
 `-o` オプションをつけて、出力先ディレクトリを指定します。
 
@@ -49,12 +49,29 @@ $ php ./diffdir/diffdir.php -o ./result/ ./php/tests/sample_a/ ./php/tests/sampl
 $ php ./diffdir/diffdir.php --strip-crlf ./php/tests/sample_a/ ./php/tests/sample_b/
 ```
 
+#### -v 詳細なメッセージを出力する
+
+`-v` オプションをつけて比較すると、改行コードだけの違いは無視されます。
+
+```
+$ php ./diffdir/diffdir.php -v ./php/tests/sample_a/ ./php/tests/sample_b/
+```
+
+
 ### PHPスクリプト内で使用する
 
 ```
 <?php
 require_once( './vendor/autoload.php' );
-$diffdir = new tomk79\diffdir( '/path/before/', '/path/after/', array('output'=>'/path/path_output_dir/', 'strip_crlf'=>true) );
+$diffdir = new tomk79\diffdir(
+	'/path/before/', // path before
+	'/path/after/',  // path after
+	array( // options
+		'output'=>'/path/path_output_dir/', // -o
+		'strip_crlf'=>true, // --strip-crlf
+		'verbose'=>true // -v
+	)
+);
 if( $diffdir->is_error() ){
 	print 'ERROR.'."\n";
 	var_dump( $diffdir->get_errors() );
