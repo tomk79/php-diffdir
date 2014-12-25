@@ -19,7 +19,7 @@ class diffdir{
 	private $fs;
 	private $before, $after, $conf = array();
 	private $errors = array();
-	private $reports = array();
+	// private $reports = array();
 
 	/**
 	 * constructor
@@ -327,19 +327,41 @@ class diffdir{
 	 * report
 	 */
 	private function report( $localpath, $status, $before_info, $after_info ){
-		array_push( $this->reports, array(
+		if( !is_dir( $this->conf['output'] ) ){
+			$this->fs->mkdir_r( $this->conf['output'] );
+		}
+		$row = array(
 			'path'=>$localpath ,
 			'status'=>$status ,
-			'before_info'=>$before_info ,
-			'after_info'=>$after_info ,
-		) );
+			'before_info'=>json_encode($before_info) ,
+			'after_info'=>json_encode($after_info) ,
+		);
+		// array_push( $this->reports, $row );
+		@error_log( $this->fs->mk_csv( array( $row ) ), 3, $this->conf['output'].'report.csv' );
 	}
 
 	/**
 	 * get report
 	 */
 	public function get_reports(){
-		return $this->reports;
+		// return $this->reports;
+		$path = $this->conf['output'].'report.csv';
+		$data = array();
+		$rtn = array();
+		if( is_file($path) ){
+			$data = $this->fs->read_csv( $path );
+		}
+		while( count( $data ) ){
+			$row = array_shift( $data );
+			$i = 0;
+			array_push( $rtn, array(
+				'path'=>$row[$i++] ,
+				'status'=>$row[$i++] ,
+				'before_info'=>json_decode($row[$i++],true) ,
+				'after_info'=>json_decode($row[$i++],true) ,
+			) );
+		}
+		return $rtn;
 	}
 
 	/**
