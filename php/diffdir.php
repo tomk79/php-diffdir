@@ -93,8 +93,26 @@ class diffdir{
 		$htmlreport->save_diff_report_index_html_header();
 
 		$csv = array();
-		foreach( $this->get_reports() as $repo ){
-			array_push( $csv, array(
+
+		// $options['charset'] は、保存されているCSVファイルの文字エンコードです。
+		// 省略時は UTF-8 から、内部エンコーディングに変換します。
+
+		$fp = fopen( $this->conf['output'].'report.csv', 'r' );
+
+		while( $csv_row = fgetcsv( $fp , 100000 , ',' , '"' ) ){
+			// foreach( $repo as $key=>$row ){
+			// 	$repo[$key] = mb_convert_encoding( $row , mb_internal_encoding() , 'UTF-8,SJIS-win,eucJP-win,SJIS,EUC-JP' );
+			// }
+
+			$i = 0;
+			$repo = array(
+				'path'=>$csv_row[$i++] ,
+				'status'=>$csv_row[$i++] ,
+				'before_info'=>json_decode($csv_row[$i++],true) ,
+				'after_info'=>json_decode($csv_row[$i++],true) ,
+			);
+
+			$csv = array(
 				$repo['path'] ,
 				$repo['status'] ,
 
@@ -111,7 +129,7 @@ class diffdir{
 				$repo['after_info']['md5'] ,
 				$repo['after_info']['encoding'] ,
 				$repo['after_info']['crlf'] ,
-			) );
+			);
 
 			$this->verbose( $repo['path'] );
 			switch( $repo['status'] ){
@@ -131,9 +149,54 @@ class diffdir{
 
 			// 差分を知らせるHTMLのindex.html(一覧)を生成
 			$htmlreport->save_diff_report_index_html_list( '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>' );
+
+			$src_csv = $this->fs->mk_csv( array( $csv ) );
+			@error_log( $src_csv, 3, $this->conf['output'].'/report/diffdir.csv' );
+
 		}
-		$src_csv = $this->fs->mk_csv( $csv );
-		$this->fs->save_file($this->conf['output'].'/report/diffdir.csv', $src_csv);
+		fclose($fp);
+
+		// foreach( $this->get_reports() as $repo ){
+		// 	array_push( $csv, array(
+		// 		$repo['path'] ,
+		// 		$repo['status'] ,
+
+		// 		$repo['before_info']['type'] ,
+		// 		$repo['before_info']['size'] ,
+		// 		@date('Y-m-d H:i:s', $repo['before_info']['timestamp']) ,
+		// 		$repo['before_info']['md5'] ,
+		// 		$repo['before_info']['encoding'] ,
+		// 		$repo['before_info']['crlf'] ,
+
+		// 		$repo['after_info']['type'] ,
+		// 		$repo['after_info']['size'] ,
+		// 		@date('Y-m-d H:i:s', $repo['after_info']['timestamp']) ,
+		// 		$repo['after_info']['md5'] ,
+		// 		$repo['after_info']['encoding'] ,
+		// 		$repo['after_info']['crlf'] ,
+		// 	) );
+
+		// 	$this->verbose( $repo['path'] );
+		// 	switch( $repo['status'] ){
+		// 		case 'changed':
+		// 		case 'added':
+		// 			// 差分があったファイルを抽出する
+		// 			$this->fs->mkdir_r( dirname( $this->conf['output'].'/pickup/'.$repo['path'] ) );
+		// 			$this->fs->copy_r(
+		// 				$this->after.$repo['path'] ,
+		// 				$this->conf['output'].'/pickup/'.$repo['path']
+		// 			);
+		// 			break;
+		// 	}
+
+		// 	// 差分を知らせるHTMLを生成
+		// 	$htmlreport->save_diff_report_html( $repo );
+
+		// 	// 差分を知らせるHTMLのindex.html(一覧)を生成
+		// 	$htmlreport->save_diff_report_index_html_list( '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>' );
+		// }
+		// $src_csv = $this->fs->mk_csv( $csv );
+		// $this->fs->save_file( $this->conf['output'].'/report/diffdir.csv', $src_csv );
 
 
 		// 差分を知らせるHTMLのindex.html(一覧)を生成
