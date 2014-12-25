@@ -89,7 +89,9 @@ class diffdir{
 		if( !$this->mkdir( $this->conf['output'].'/pickup/', __FILE__, __LINE__ ) ){ return false; }
 		if( !$this->mkdir( $this->conf['output'].'/report/', __FILE__, __LINE__ ) ){ return false; }
 
-		$html_list = '';
+		// 差分を知らせるHTMLのindex.html(一覧)を生成
+		$htmlreport->save_diff_report_index_html_header();
+
 		$csv = array();
 		foreach( $this->get_reports() as $repo ){
 			array_push( $csv, array(
@@ -126,14 +128,16 @@ class diffdir{
 
 			// 差分を知らせるHTMLを生成
 			$htmlreport->save_diff_report_html( $repo );
-			$html_list .= '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>';
+
+			// 差分を知らせるHTMLのindex.html(一覧)を生成
+			$htmlreport->save_diff_report_index_html_list( '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>' );
 		}
 		$src_csv = $this->fs->mk_csv( $csv );
 		$this->fs->save_file($this->conf['output'].'/report/diffdir.csv', $src_csv);
 
 
-		// 差分を知らせるHTMLのindex.htmlを生成
-		$htmlreport->save_diff_report_index_html($html_list);
+		// 差分を知らせるHTMLのindex.html(一覧)を生成
+		$htmlreport->save_diff_report_index_html_footer();
 
 		return true;
 	}

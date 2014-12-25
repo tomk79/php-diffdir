@@ -9,10 +9,12 @@ require_once( __DIR__.'/../diffdir.php' );
 
 class diffdirTest extends PHPUnit_Framework_TestCase{
 	private $fs;
+	private $timestamp;
 
 	public function setup(){
 		mb_internal_encoding('UTF-8');
 		$this->fs = new \tomk79\filesystem();
+		$this->timestamp = @mktime(0, 0, 0, 1, 1, 2000);
 	}
 
 	/**
@@ -31,6 +33,8 @@ class diffdirTest extends PHPUnit_Framework_TestCase{
 		$this->fs->save_file( __DIR__.'/sample_a/crlf.html', $crlfHTML );
 		$crlfHTML = preg_replace( '/(?:\r\n|\r|\n)/', "\r\n", $crlfHTML );
 		$this->fs->save_file( __DIR__.'/sample_b/crlf.html', $crlfHTML );
+		touch( __DIR__.'/sample_a/crlf.html', $this->timestamp );
+		touch( __DIR__.'/sample_b/crlf.html', $this->timestamp );
 
 		$diffdir = new \tomk79\diffdir(
 			__DIR__.'/sample_a/',
@@ -62,6 +66,8 @@ class diffdirTest extends PHPUnit_Framework_TestCase{
 		$this->fs->save_file( __DIR__.'/sample_a/crlf.html', $crlfHTML );
 		$crlfHTML = preg_replace( '/(?:\r\n|\r|\n)/', "\r\n", $crlfHTML );
 		$this->fs->save_file( __DIR__.'/sample_b/crlf.html', $crlfHTML );
+		touch( __DIR__.'/sample_a/crlf.html', $this->timestamp );
+		touch( __DIR__.'/sample_b/crlf.html', $this->timestamp );
 
 		$diffdir = new \tomk79\diffdir(
 			__DIR__.'/sample_a/',

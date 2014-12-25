@@ -27,9 +27,9 @@ class htmlreport{
 	}
 
 	/**
-	 * save diff report index HTML
+	 * save diff report index HTML (header)
 	 */
-	public function save_diff_report_index_html( $html_list ){
+	public function save_diff_report_index_html_header(){
 		ob_start();?>
 <!DOCTYPE html>
 <html>
@@ -124,14 +124,34 @@ class htmlreport{
 				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
 			</div>
 			<div id="difflist">
-				<ul><?= $html_list; ?></ul>
+				<ul><?php
+		$html = ob_get_clean();
+		$this->fs->save_file($this->conf['output'].'/report/index.html', $html);
+		return true;
+	}
+
+	/**
+	 * save diff report index HTML
+	 */
+	public function save_diff_report_index_html_list( $html ){
+		@error_log($html, 3, $this->conf['output'].'/report/index.html');
+		return true;
+	}
+
+	/**
+	 * save diff report index HTML (Footer)
+	 */
+	public function save_diff_report_index_html_footer(){
+		ob_start();?>
+</ul>
 			</div>
 		</div>
 	</body>
 </html>
 <?php
-		$html_list = ob_get_clean();
-		$this->fs->save_file($this->conf['output'].'/report/index.html', $html_list);
+		$html = ob_get_clean();
+		@error_log($html, 3, $this->conf['output'].'/report/index.html');
+		return true;
 	}
 
 	/**
