@@ -56,22 +56,22 @@ class diffdir{
 	 */
 	private function validate(){
 		if( !strlen( $this->before ) || !is_dir($this->before) ){
-			$this->error('before NOT exists.', __FILE__, __LINE__);
+			$this->error('before NOT exists. ('.$this->before.')', __FILE__, __LINE__);
 			return false;
 		}
 		if( !strlen( $this->after ) || !is_dir($this->after) ){
-			$this->error('after NOT exists.', __FILE__, __LINE__);
+			$this->error('after NOT exists. ('.$this->after.')', __FILE__, __LINE__);
 			return false;
 		}
 		if( $this->before === $this->after ){
-			$this->error('Paths "before" equals "after" given.', __FILE__, __LINE__);
+			$this->error('Paths "before" equals "after" given. ('.$this->after.')', __FILE__, __LINE__);
 			return false;
 		}
 		if( is_dir( $this->conf['output'] ) ){
-			$this->error('output directory exists.', __FILE__, __LINE__);
+			$this->error('output directory already exists. ('.$this->conf['output'].')', __FILE__, __LINE__);
 			return false;
 		}elseif( !$this->fs->is_writable( $this->conf['output'] ) ){
-			$this->error('output directory is NOT writable.', __FILE__, __LINE__);
+			$this->error('output directory is NOT writable. ('.$this->conf['output'].')', __FILE__, __LINE__);
 			return false;
 		}
 		return true;
