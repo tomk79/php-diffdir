@@ -14,7 +14,7 @@ diffdir のインストールには `composer` を使用します。
 
 ```
 $ cd {$yourDirectory}
-$ composer create-project tomk79/diffdir ./diffdir/
+$ composer create-project tomk79/diffdir ./
 ```
 
 ## 使い方 - Usage
@@ -22,13 +22,13 @@ $ composer create-project tomk79/diffdir ./diffdir/
 ### 基本的な使い方 - Basic usage.
 
 ```
-$ php ./diffdir/diffdir.php {$path_dirA} {$path_dirB}
+$ php ./diffdir.php {$path_dirA} {$path_dirB}
 ```
 
 ### サンプルデータを比較する例 - Exsample of diff sample data.
 
 ```
-$ php ./diffdir/diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
 ```
 
 ### オプション
@@ -38,7 +38,7 @@ $ php ./diffdir/diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
 `-o` オプションをつけて、出力先ディレクトリを指定します。
 
 ```
-$ php ./diffdir/diffdir.php -o ./result/ ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php -o ./result_sample/ ./php/tests/sample_a/ ./php/tests/sample_b/
 ```
 
 #### --strip-crlf 改行コードを無視する
@@ -46,15 +46,15 @@ $ php ./diffdir/diffdir.php -o ./result/ ./php/tests/sample_a/ ./php/tests/sampl
 `--strip-crlf` オプションをつけて比較すると、改行コードだけの違いは無視されます。
 
 ```
-$ php ./diffdir/diffdir.php --strip-crlf ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php --strip-crlf ./php/tests/sample_a/ ./php/tests/sample_b/
 ```
 
 #### -v 詳細なメッセージを出力する
 
-`-v` オプションをつけて比較すると、改行コードだけの違いは無視されます。
+`-v` オプションをつけて比較すると、ターミナル上に処理の詳細が表示されます。
 
 ```
-$ php ./diffdir/diffdir.php -v ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php -v ./php/tests/sample_a/ ./php/tests/sample_b/
 ```
 
 

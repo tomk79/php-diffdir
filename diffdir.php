@@ -43,9 +43,11 @@ $diffdir = new tomk79\diffdir( $before, $after, $conf );
 if( $conf['verbose'] ){
 	if( $diffdir->is_error() ){
 		print 'ERROR.'."\n";
-		$error = $diffdir->get_errors();
-		print $error['msg']."\n";
-		print '  ('.$error['FILE'].':'.$error['LINE'].')'."\n";
+		$errors = $diffdir->get_errors();
+		foreach( $errors as $error ){
+			print @$error['msg']."\n";
+			print '  ('.@$error['FILE'].':'.@$error['LINE'].')'."\n";
+		}
 	}else{
 		print 'success.'."\n";
 		print ''."\n";

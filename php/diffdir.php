@@ -67,10 +67,10 @@ class diffdir{
 			return false;
 		}
 		if( is_dir( $this->conf['output'] ) ){
-			$this->error('output directory already exists. ('.$this->conf['output'].')', __FILE__, __LINE__);
+			$this->error('output directory already exists. ('.$this->fs->get_realpath($this->conf['output']).')', __FILE__, __LINE__);
 			return false;
 		}elseif( !$this->fs->is_writable( $this->conf['output'] ) ){
-			$this->error('output directory is NOT writable. ('.$this->conf['output'].')', __FILE__, __LINE__);
+			$this->error('output directory is NOT writable. ('.$this->fs->get_realpath($this->conf['output']).')', __FILE__, __LINE__);
 			return false;
 		}
 		return true;
@@ -218,7 +218,7 @@ class diffdir{
 				$after_info['timestamp']  = filemtime( $realpath_after  );
 				$before_info['type'] = 'file';
 				$after_info['type']  = 'file';
-				if( $this->conf['strip_crlf'] ){
+				if( @$this->conf['strip_crlf'] ){
 					if(
 						md5( preg_replace( '/\r\n|\r|\n/', '', $this->fs->read_file( $realpath_before ) ) ) !==
 						md5( preg_replace( '/\r\n|\r|\n/', '', $this->fs->read_file( $realpath_after  ) ) )
@@ -306,7 +306,7 @@ class diffdir{
 	 */
 	private function mkdir( $path, $FILE=null, $LINE=null ){
 		if( !$this->fs->mkdir( $path ) ){
-			$this->error('Making directory "'.$path.'" was failed.', $FILE, $LINE);
+			$this->error('Making directory "'.realpath($path).'" was failed.', $FILE, $LINE);
 			return false;
 		}
 		return true;
@@ -406,7 +406,7 @@ class diffdir{
 	 * @return bool true
 	 */
 	public function verbose( $msg ){
-		if( $this->conf['verbose'] ){
+		if( @$this->conf['verbose'] ){
 			print $msg."\n";
 		}
 		return true;
@@ -417,7 +417,7 @@ class diffdir{
 	 * @return bool output directory
 	 */
 	public function get_output_dir(){
-		return $this->conf['output'];
+		return @$this->conf['output'];
 	}
 
 }

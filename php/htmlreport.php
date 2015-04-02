@@ -232,8 +232,8 @@ class htmlreport{
 		case 'mm':
 			?>
 	<div class="code"><pre><code><?= $diff->render(
-	mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
-	mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order())
+	@mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
+	@mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order())
 ) ?></code></pre></div><?php
 			break;
 		default:
