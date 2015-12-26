@@ -234,24 +234,60 @@ class htmlreport{
 	$bin_after  = @$this->fs->read_file( $this->after.$repo['path'] );
 	$ext = @$this->fs->get_extension( $repo['path'] );
 	switch( strtolower( $ext ) ){
+		// ウェブドキュメント類
 		case 'html':
 		case 'htm':
 		case 'xhtml':
 		case 'xhtm':
+		case 'shtml':
+		case 'shtm':
 		case 'js':
 		case 'css':
-		case 'xml':
-		case 'svg':
-		case 'csv':
 		case 'rss':
 		case 'rdf':
 		case 'inc':
+		// テキスト類
 		case 'text':
 		case 'txt':
+		case 'md':
+		// プログラム言語類
 		case 'php':
 		case 'cgi':
-		case 'md':
+		case 'pl':
+		case 'rb':
+		case 'py':
+		case 'c':
+		case 'cpp':
+		case 'cs':
+		case 'd':
+		case 'go':
+		case 'h':
+		case 'hx':
+		case 'java':
+		case 'lisp':
+		case 'lua':
+		case 'sql':
+		case 'scala':
+		case 'sh':
+		case 'bat':
+		case 'vbs':
+		case 'hs':
+		case 'lhs':
+		case 'as':
+		// データファイル類
+		case 'csv':
+		case 'json':
+		case 'ini':
+		case 'conf':
+		case 'yml':
 		case 'mm':
+		case 'xml':
+		case 'svg':
+		// 糖衣言語類
+		case 'scss':
+		case 'coffee':
+		case 'styl':
+		case 'jade':
 			?>
 	<div class="code"><pre><code><?= $diff->render(
 	@mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
