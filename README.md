@@ -28,7 +28,7 @@ $ php ./diffdir.php {$path_dirA} {$path_dirB}
 ### サンプルデータを比較する例 - Example: diff of sample data.
 
 ```
-$ php ./diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php ./tests/sample_a/ ./tests/sample_b/
 ```
 
 ### オプション
@@ -38,7 +38,7 @@ $ php ./diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
 `-o` オプションをつけて、出力先ディレクトリを指定します。
 
 ```
-$ php ./diffdir.php -o ./result_sample/ ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php -o ./result_sample/ ./tests/sample_a/ ./tests/sample_b/
 ```
 
 #### --strip-crlf 改行コードを無視する
@@ -46,7 +46,7 @@ $ php ./diffdir.php -o ./result_sample/ ./php/tests/sample_a/ ./php/tests/sample
 `--strip-crlf` オプションをつけて比較すると、改行コードだけの違いは無視されます。
 
 ```
-$ php ./diffdir.php --strip-crlf ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php --strip-crlf ./tests/sample_a/ ./tests/sample_b/
 ```
 
 #### -v 詳細なメッセージを出力する
@@ -54,7 +54,7 @@ $ php ./diffdir.php --strip-crlf ./php/tests/sample_a/ ./php/tests/sample_b/
 `-v` オプションをつけて比較すると、ターミナル上に処理の詳細が表示されます。
 
 ```
-$ php ./diffdir.php -v ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php -v ./tests/sample_a/ ./tests/sample_b/
 ```
 
 
@@ -63,7 +63,7 @@ $ php ./diffdir.php -v ./php/tests/sample_a/ ./php/tests/sample_b/
 `-q` オプションをつけて比較すると、ターミナル上の表示の一切が隠されます。
 
 ```
-$ php ./diffdir.php -q ./php/tests/sample_a/ ./php/tests/sample_b/
+$ php ./diffdir.php -q ./tests/sample_a/ ./tests/sample_b/
 ```
 
 
