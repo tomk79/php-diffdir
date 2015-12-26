@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>diffdir</title>
+		<link rel="stylesheet" href="./resources/fess-1.2.2.css" />
+		<script src="./resources/jquery-1.10.1.min.js"></script>
+		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap-theme.css" />
+		<script src="./resources/bootstrap/js/bootstrap.js"></script>
+		<style type="text/css">
+			html, body{
+				margin:0;padding:0;
+				background-color:#fff;
+				color:#333;
+			}
+			#outline{
+				width:auto;
+				max-height:100%;
+				overflow: hidden;
+			}
+			#diffpreview{
+				float:right;
+				width:73%;
+				max-height:100%;
+			}
+			#diffpreview iframe{
+				width:100%;
+			}
+			#difflist{
+				float:left;
+				overflow:auto;
+				width:25%;
+				max-height:100%;
+			}
+			#difflist ul{
+				padding: 10px;
+				margin: 0;
+			}
+			#difflist li{
+				margin-top:1px;
+				margin-bottom:1px;
+				list-style-type:none;
+			}
+			#difflist li.dir{
+				background-color:#f5f5f5;
+				font-weight:bold;
+			}
+			#difflist li a{
+				color:#000;
+				text-decoration:none;
+			}
+			#difflist li.changed a{
+				background-color:#dfd;
+			}
+			#difflist li.changed a:after{
+				content:"[C]";
+				margin-left:0.5em;
+			}
+			#difflist li.added a{
+				background-color:#dfd;
+			}
+			#difflist li.added a:after{
+				content:"[A]";
+				color:#f90;
+				margin-left:0.5em;
+			}
+			#difflist li.deleted a{
+				color:#f00;
+				background-color:#fdd;
+			}
+			#difflist li.deleted a:after{
+				content:"[D]";
+				margin-left:0.5em;
+			}
+		</style>
+		<script>
+			(function(){
+				function refresh(){
+					var outline = document.getElementById('outline');
+					var diffpreview = document.getElementById('diffpreview');
+					var iframe = document.getElementById('iframe');
+					var difflist = document.getElementById('difflist');
+
+					outline.style.height = window.innerHeight+'px';
+					iframe.height = window.innerHeight;
+				}
+				window.onload = refresh;
+				window.onresize = refresh;
+			})();
+		</script>
+	</head>
+	<body>
+		<div id="outline">
+			<div id="diffpreview">
+				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
+			</div>
+			<div id="difflist">
+				<script>
+				function filterList(showSelector){
+					var $list = $('#difflist ul');
+					$list.find('li').hide();
+					var $showlist = $list.find(showSelector);
+					$showlist.show();
+				}
+				</script>
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default" onclick="filterList('*');">すべて</button>
+					<button type="button" class="btn btn-default" onclick="filterList('.changed,.added,.deleted');">差分のみ</button>
+				</div>
+				<ul><li class=" dir dir"><a href="diff/common.diff.html" target="diffpreview">common</a></li><li class=" file file"><a href="diff/common/include.inc.diff.html" target="diffpreview">common/include.inc</a></li><li class=" file file"><a href="diff/common/sampleimage.png.diff.html" target="diffpreview">common/sampleimage.png</a></li><li class="changed file file"><a href="diff/crlf.html.diff.html" target="diffpreview">crlf.html</a></li><li class="changed file file"><a href="diff/diff.html.diff.html" target="diffpreview">diff.html</a></li><li class="changed dir file"><a href="diff/dir_to_file.diff.html" target="diffpreview">dir_to_file</a></li><li class=" dir dir"><a href="diff/equal.diff.html" target="diffpreview">equal</a></li><li class="changed file file"><a href="diff/equal/diff.html.diff.html" target="diffpreview">equal/diff.html</a></li><li class=" file file"><a href="diff/equal/equal.html.diff.html" target="diffpreview">equal/equal.html</a></li><li class="deleted file "><a href="diff/equal/only_a.html.diff.html" target="diffpreview">equal/only_a.html</a></li><li class="added  file"><a href="diff/equal/only_b.html.diff.html" target="diffpreview">equal/only_b.html</a></li><li class=" file file"><a href="diff/equal.html.diff.html" target="diffpreview">equal.html</a></li><li class="changed file dir"><a href="diff/file_to_dir.diff.html" target="diffpreview">file_to_dir</a></li><li class="deleted dir "><a href="diff/only_a.diff.html" target="diffpreview">only_a</a></li><li class="deleted file "><a href="diff/only_a/diff.html.diff.html" target="diffpreview">only_a/diff.html</a></li><li class="deleted file "><a href="diff/only_a/equal.html.diff.html" target="diffpreview">only_a/equal.html</a></li><li class="deleted file "><a href="diff/only_a/only_a.html.diff.html" target="diffpreview">only_a/only_a.html</a></li><li class="deleted file "><a href="diff/only_a.html.diff.html" target="diffpreview">only_a.html</a></li><li class="added  dir"><a href="diff/only_b.diff.html" target="diffpreview">only_b</a></li><li class="added  file"><a href="diff/only_b/diff.html.diff.html" target="diffpreview">only_b/diff.html</a></li><li class="added  file"><a href="diff/only_b/equal.html.diff.html" target="diffpreview">only_b/equal.html</a></li><li class="added  file"><a href="diff/only_b/only_b.html.diff.html" target="diffpreview">only_b/only_b.html</a></li><li class="added  file"><a href="diff/only_b.html.diff.html" target="diffpreview">only_b.html</a></li></ul>
+			</div>
+		</div>
+	</body>
+</html>

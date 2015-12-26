@@ -1,0 +1,7 @@
+<phpunit>
+	<testsuites>
+		<testsuite name="default">
+			<directory>tests/diffdirTest.php</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>

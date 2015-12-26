@@ -25,7 +25,7 @@ $ composer create-project tomk79/diffdir ./
 $ php ./diffdir.php {$path_dirA} {$path_dirB}
 ```
 
-### サンプルデータを比較する例 - Exsample of diff sample data.
+### サンプルデータを比較する例 - Example: diff of sample data.
 
 ```
 $ php ./diffdir.php ./php/tests/sample_a/ ./php/tests/sample_b/
@@ -133,4 +133,3 @@ $ php -r "readfile('https://getcomposer.org/installer');" | php
 $ cd (project directory)
 $ ./vendor/phpunit/phpunit/phpunit php/tests/diffdirTest
 ```
-

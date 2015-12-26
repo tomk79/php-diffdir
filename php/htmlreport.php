@@ -1,7 +1,7 @@
 <?php
 /**
  * tomk79/diffdir
- * 
+ *
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
 
@@ -9,7 +9,7 @@ namespace tomk79\diffdir;
 
 /**
  * tomk79/diffdir htmlreport
- * 
+ *
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
 class htmlreport{
@@ -30,12 +30,18 @@ class htmlreport{
 	 * save diff report index HTML (header)
 	 */
 	public function save_diff_report_index_html_header(){
+		$this->fs->copy_r(__DIR__.'/resources/', $this->conf['output'].'/report/resources/');
 		ob_start();?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8" />
 		<title>diffdir</title>
+		<link rel="stylesheet" href="./resources/fess-1.2.2.css" />
+		<script src="./resources/jquery-1.10.1.min.js"></script>
+		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap-theme.css" />
+		<script src="./resources/bootstrap/js/bootstrap.js"></script>
 		<style type="text/css">
 			html, body{
 				margin:0;padding:0;
@@ -124,6 +130,18 @@ class htmlreport{
 				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
 			</div>
 			<div id="difflist">
+				<script>
+				function filterList(showSelector){
+					var $list = $('#difflist ul');
+					$list.find('li').hide();
+					var $showlist = $list.find(showSelector);
+					$showlist.show();
+				}
+				</script>
+				<div class="btn-group" role="group" aria-label="...">
+					<button type="button" class="btn btn-default" onclick="filterList('*');">すべて</button>
+					<button type="button" class="btn btn-default" onclick="filterList('.changed,.added,.deleted');">差分のみ</button>
+				</div>
 				<ul><?php
 		$html = ob_get_clean();
 		$this->fs->save_file($this->conf['output'].'/report/index.html', $html);
@@ -158,6 +176,8 @@ class htmlreport{
 	 * save diff report HTML
 	 */
 	public function save_diff_report_html( $repo ){
+		$path_diffHtml = $this->conf['output'].'/report/diff/'.$repo['path'].'.diff.html';
+		$path_base = $this->fs->get_relatedpath($this->conf['output'].'/report/', dirname($path_diffHtml));
 		$diff = new \cogpowered\FineDiff\Diff;
 		ob_start(); ?>
 <!DOCTYPE html>
@@ -165,9 +185,11 @@ class htmlreport{
 <head>
 <meta charset="UTF-8" />
 <title>diff: <?= htmlspecialchars($repo['path']); ?></title>
-<style>
-<?= file_get_contents( __DIR__.'/fess-1.1.2.css' ); ?>
-</style>
+<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/fess-1.2.2.css" />
+<script src="<?= htmlspecialchars($path_base); ?>resources/jquery-1.10.1.min.js"></script>
+<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap-theme.css" />
+<script src="<?= htmlspecialchars($path_base); ?>resources/bootstrap/js/bootstrap.js"></script>
 <style>
 	body{
 		color:#333;
@@ -283,7 +305,6 @@ class htmlreport{
 </html>
 <?php
 		$src_html_diff = ob_get_clean();
-		$path_diffHtml = $this->conf['output'].'/report/diff/'.$repo['path'].'.diff.html';
 		$this->fs->mkdir_r( dirname( $path_diffHtml ) );
 		$this->fs->save_file( $path_diffHtml, $src_html_diff );
 		return true;
