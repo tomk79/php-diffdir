@@ -68,13 +68,17 @@ class htmlreport{
 				max-height:100%;
 			}
 			#difflist ul{
+				display:table;
+				width:100%;
 				padding: 10px;
 				margin: 0;
 			}
 			#difflist li{
+				display:table-row;
 				margin-top:1px;
 				margin-bottom:1px;
 				list-style-type:none;
+				white-space: nowrap;
 			}
 			#difflist li.dir{
 				background-color:#f5f5f5;
@@ -131,16 +135,19 @@ class htmlreport{
 			</div>
 			<div id="difflist">
 				<script>
+				function showAllList(){
+					var $list = $('#difflist ul li');
+					$list.show();
+				}
 				function filterList(showSelector){
-					var $list = $('#difflist ul');
-					$list.find('li').hide();
-					var $showlist = $list.find(showSelector);
-					$showlist.show();
+					var $list = $('#difflist ul').find(showSelector);
+					$list.hide();
 				}
 				</script>
 				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default" onclick="filterList('*');">すべて</button>
-					<button type="button" class="btn btn-default" onclick="filterList('.changed,.added,.deleted');">差分のみ</button>
+					<button type="button" class="btn btn-default" onclick="showAllList();">すべて表示</button>
+					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.changed,.added,.deleted)');">差分のみ</button>
+					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.file)');">ファイルのみ</button>
 				</div>
 				<ul><?php
 		$html = ob_get_clean();

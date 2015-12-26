@@ -34,13 +34,17 @@
 				max-height:100%;
 			}
 			#difflist ul{
+				display:table;
+				width:100%;
 				padding: 10px;
 				margin: 0;
 			}
 			#difflist li{
+				display:table-row;
 				margin-top:1px;
 				margin-bottom:1px;
 				list-style-type:none;
+				white-space: nowrap;
 			}
 			#difflist li.dir{
 				background-color:#f5f5f5;
@@ -97,16 +101,19 @@
 			</div>
 			<div id="difflist">
 				<script>
+				function showAllList(){
+					var $list = $('#difflist ul li');
+					$list.show();
+				}
 				function filterList(showSelector){
-					var $list = $('#difflist ul');
-					$list.find('li').hide();
-					var $showlist = $list.find(showSelector);
-					$showlist.show();
+					var $list = $('#difflist ul').find(showSelector);
+					$list.hide();
 				}
 				</script>
 				<div class="btn-group" role="group" aria-label="...">
-					<button type="button" class="btn btn-default" onclick="filterList('*');">すべて</button>
-					<button type="button" class="btn btn-default" onclick="filterList('.changed,.added,.deleted');">差分のみ</button>
+					<button type="button" class="btn btn-default" onclick="showAllList();">すべて表示</button>
+					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.changed,.added,.deleted)');">差分のみ</button>
+					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.file)');">ファイルのみ</button>
 				</div>
 				<ul><li class=" dir dir"><a href="diff/common.diff.html" target="diffpreview">common</a></li><li class=" file file"><a href="diff/common/include.inc.diff.html" target="diffpreview">common/include.inc</a></li><li class=" file file"><a href="diff/common/sampleimage.png.diff.html" target="diffpreview">common/sampleimage.png</a></li><li class="changed file file"><a href="diff/crlf.html.diff.html" target="diffpreview">crlf.html</a></li><li class="changed file file"><a href="diff/diff.html.diff.html" target="diffpreview">diff.html</a></li><li class="changed dir file"><a href="diff/dir_to_file.diff.html" target="diffpreview">dir_to_file</a></li><li class=" dir dir"><a href="diff/equal.diff.html" target="diffpreview">equal</a></li><li class="changed file file"><a href="diff/equal/diff.html.diff.html" target="diffpreview">equal/diff.html</a></li><li class=" file file"><a href="diff/equal/equal.html.diff.html" target="diffpreview">equal/equal.html</a></li><li class="deleted file "><a href="diff/equal/only_a.html.diff.html" target="diffpreview">equal/only_a.html</a></li><li class="added  file"><a href="diff/equal/only_b.html.diff.html" target="diffpreview">equal/only_b.html</a></li><li class=" file file"><a href="diff/equal.html.diff.html" target="diffpreview">equal.html</a></li><li class="changed file dir"><a href="diff/file_to_dir.diff.html" target="diffpreview">file_to_dir</a></li><li class="deleted dir "><a href="diff/only_a.diff.html" target="diffpreview">only_a</a></li><li class="deleted file "><a href="diff/only_a/diff.html.diff.html" target="diffpreview">only_a/diff.html</a></li><li class="deleted file "><a href="diff/only_a/equal.html.diff.html" target="diffpreview">only_a/equal.html</a></li><li class="deleted file "><a href="diff/only_a/only_a.html.diff.html" target="diffpreview">only_a/only_a.html</a></li><li class="deleted file "><a href="diff/only_a.html.diff.html" target="diffpreview">only_a.html</a></li><li class="added  dir"><a href="diff/only_b.diff.html" target="diffpreview">only_b</a></li><li class="added  file"><a href="diff/only_b/diff.html.diff.html" target="diffpreview">only_b/diff.html</a></li><li class="added  file"><a href="diff/only_b/equal.html.diff.html" target="diffpreview">only_b/equal.html</a></li><li class="added  file"><a href="diff/only_b/only_b.html.diff.html" target="diffpreview">only_b/only_b.html</a></li><li class="added  file"><a href="diff/only_b.html.diff.html" target="diffpreview">only_b.html</a></li></ul>
 			</div>
