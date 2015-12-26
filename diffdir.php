@@ -1,9 +1,9 @@
 <?php
 /**
  * command "diffdir".
- * 
+ *
  * $ php diffdir.php  "./php/tests/sample_a/" "./php/tests/sample_b/"
- * 
+ *
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
 require_once( __DIR__.'/vendor/autoload.php' );
@@ -13,7 +13,7 @@ $argv = $_SERVER['argv'];
 array_shift($argv);
 $after = array_pop($argv);
 $before = array_pop($argv);
-$conf = array('output'=>null, 'strip_crlf'=>false, 'verbose'=>false);
+$conf = array('output'=>null, 'strip_crlf'=>false, 'verbose'=>true);
 
 for( $i = 0; $i < count($argv); $i ++ ){
 	if( $argv[$i] == '-o' ){
@@ -30,6 +30,10 @@ for( $i = 0; $i < count($argv); $i ++ ){
 	}
 	if( $argv[$i] == '-v' ){
 		$conf['verbose'] = true;
+		continue;
+	}
+	if( $argv[$i] == '-q' ){
+		$conf['verbose'] = false;
 		continue;
 	}
 }

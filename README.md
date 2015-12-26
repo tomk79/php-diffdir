@@ -58,6 +58,15 @@ $ php ./diffdir.php -v ./php/tests/sample_a/ ./php/tests/sample_b/
 ```
 
 
+#### -q メッセージを表示しない
+
+`-q` オプションをつけて比較すると、ターミナル上の表示の一切が隠されます。
+
+```
+$ php ./diffdir.php -q ./php/tests/sample_a/ ./php/tests/sample_b/
+```
+
+
 ### PHPスクリプト内で使用する
 
 ```
