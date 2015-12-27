@@ -42,76 +42,8 @@ class htmlreport{
 		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap-theme.css" />
 		<script src="./resources/bootstrap/js/bootstrap.js"></script>
-		<style type="text/css">
-			html, body{
-				margin:0;padding:0;
-				background-color:#fff;
-				color:#333;
-			}
-			#outline{
-				width:auto;
-				max-height:100%;
-				overflow: hidden;
-			}
-			#diffpreview{
-				float:right;
-				width:73%;
-				max-height:100%;
-			}
-			#diffpreview iframe{
-				width:100%;
-			}
-			#difflist{
-				float:left;
-				overflow:auto;
-				width:25%;
-				max-height:100%;
-			}
-			#difflist ul{
-				display:table;
-				width:100%;
-				padding: 10px;
-				margin: 0;
-			}
-			#difflist li{
-				display:table-row;
-				margin-top:1px;
-				margin-bottom:1px;
-				list-style-type:none;
-				white-space: nowrap;
-			}
-			#difflist li.dir{
-				background-color:#f5f5f5;
-				font-weight:bold;
-			}
-			#difflist li a{
-				color:#000;
-				text-decoration:none;
-			}
-			#difflist li.changed a{
-				background-color:#dfd;
-			}
-			#difflist li.changed a:after{
-				content:"[C]";
-				margin-left:0.5em;
-			}
-			#difflist li.added a{
-				background-color:#dfd;
-			}
-			#difflist li.added a:after{
-				content:"[A]";
-				color:#f90;
-				margin-left:0.5em;
-			}
-			#difflist li.deleted a{
-				color:#f00;
-				background-color:#fdd;
-			}
-			#difflist li.deleted a:after{
-				content:"[D]";
-				margin-left:0.5em;
-			}
-		</style>
+		<link rel="stylesheet" href="./resources/common.css" />
+		<script src="./resources/common.js"></script>
 		<script>
 			(function(){
 				function refresh(){
@@ -134,17 +66,7 @@ class htmlreport{
 				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
 			</div>
 			<div id="difflist">
-				<script>
-				function showAllList(){
-					var $list = $('#difflist ul li');
-					$list.show();
-				}
-				function filterList(showSelector){
-					var $list = $('#difflist ul').find(showSelector);
-					$list.hide();
-				}
-				</script>
-				<div class="btn-group" role="group" aria-label="...">
+				<div class="btn-group" role="group">
 					<button type="button" class="btn btn-default" onclick="showAllList();">すべて表示</button>
 					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.changed,.added,.deleted)');">差分のみ</button>
 					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.file)');">ファイルのみ</button>
@@ -197,26 +119,8 @@ class htmlreport{
 <link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap-theme.css" />
 <script src="<?= htmlspecialchars($path_base); ?>resources/bootstrap/js/bootstrap.js"></script>
-<style>
-	body{
-		color:#333;
-		margin:0;
-		padding:0;
-	}
-	.theme_outline{
-		margin:1em 1em;
-	}
-	ins{
-		color:#000;
-		background-color:#dfd;
-		text-decoration:none;
-	}
-	del{
-		color:#f00;
-		background-color:#fdd;
-		text-decoration:none;
-	}
-</style>
+<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/common.css" />
+<script src="<?= htmlspecialchars($path_base); ?>resources/common.js"></script>
 </head>
 <body>
 <div class="theme_outline">
@@ -300,6 +204,34 @@ class htmlreport{
 	@mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
 	@mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order())
 ) ?></code></pre></div><?php
+			break;
+		case 'jpg':
+		case 'jpeg':
+		case 'jpe':
+		case 'gif':
+		case 'png':
+			print '<div class="image-preview">';
+			print '<div class="btn-group" role="group">';
+			print '	<button type="button" class="btn btn-default" onclick="compareImagesInTwoColumns();">並べて比較</button>';
+			print '	<button type="button" class="btn btn-default" onclick="compareImagesInPilingUp();">重ねて比較</button>';
+			print '</div>';
+			print '<div class="image-preview--twocolumns">';
+			if(@strlen($bin_before)){
+				print '<div class="image-preview--before">';
+				print '<p>変更前</p>';
+				print '<img src="data:image/png;base64,'.htmlspecialchars( base64_encode($bin_before) ).'" alt="変更前の画像プレビュー" />';
+				print '</div>';
+			}
+			if(@strlen($bin_after)){
+				print '<div class="image-preview--after">';
+				print '<p>変更後</p>';
+				print '<img src="data:image/png;base64,'.htmlspecialchars( base64_encode($bin_after) ).'" alt="変更後の画像プレビュー" />';
+				print '</div>';
+			}
+			print '</div>';
+			print '<div class="image-preview--pilingup">';
+			print '</div>';
+			print '</div>';
 			break;
 		default:
 			print '<p>比較できない拡張子です。</p>';
