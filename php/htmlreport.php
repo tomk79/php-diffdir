@@ -107,7 +107,6 @@ class htmlreport{
 	public function save_diff_report_html( $repo ){
 		$path_diffHtml = $this->conf['output'].'/report/diff/'.$repo['path'].'.diff.html';
 		$path_base = $this->fs->get_relatedpath($this->conf['output'].'/report/', dirname($path_diffHtml));
-		$diff = new \cogpowered\FineDiff\Diff;
 		ob_start(); ?>
 <!DOCTYPE html>
 <html>
@@ -200,10 +199,30 @@ class htmlreport{
 		case 'styl':
 		case 'jade':
 			?>
-	<div class="code"><pre><code><?= $diff->render(
-	@mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
-	@mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order())
-) ?></code></pre></div><?php
+	<div class="code"><pre><code><?php
+$from = @mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+$to = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+$options = array(
+	'ignoreWhitespace' => true,
+	'ignoreCase' => true,
+);
+$diff = new \Diff(
+	preg_split('/\r\n|\r|\n/', $from),
+	preg_split('/\r\n|\r|\n/', $to),
+	$options
+);
+// $renderer = new \Diff_Renderer_Html_Inline;
+$renderer = new \Diff_Renderer_Html_SideBySide;
+$diffHtml = $diff->render($renderer);
+// $renderer = new \Diff_Renderer_Text_Unified;
+// $renderer = new \Diff_Renderer_Text_Context;
+// $diffHtml = htmlspecialchars($diff->render($renderer));
+if( strlen($diffHtml) ){
+	echo $diffHtml;
+}else{
+	echo htmlspecialchars($bin_after);
+}
+?></code></pre></div><?php
 			break;
 		case 'jpg':
 		case 'jpeg':
