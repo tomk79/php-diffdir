@@ -451,6 +451,12 @@ class htmlreport{
 					}
 				}
 			}
+			if( !count($diff_row['words']) ){
+				$diff_row['change'] = htmlspecialchars($diff_row['change']);
+				$diff_row['change'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $diff_row['change'] );
+				$rtn['inline'] .= '<ins>'.$diff_row['change'].'</ins>';
+				$tmp_right .= '<ins>'.$diff_row['change'].'</ins>';
+			}
 			$rtn['inline'] .= '</div>';
 			$rtn['two-columns'] .= '<th>'.intval($diff_row['line']).'</th>';
 			$rtn['two-columns'] .= '<td>'.$tmp_left.'</td>';
@@ -464,18 +470,6 @@ class htmlreport{
 		$rtn['two-columns'] .= '</div>';
 
 		return $rtn;
-
-		// // Get HTML data (use table tag)
-		// $html = $diff->getHtml();
-		// // var_dump($html);
-		//
-		// $rtn = '';
-		// $rtn .= '		<div class="textdiff textdiff--two-columns">';
-		// $rtn .= '			<div>'.$html['source'].'</div>';
-		// $rtn .= '			<div>'.$html['change'].'</div>';
-		// $rtn .= '		</div>';
-		//
-		// return $rtn;
 	}
 
 	/**
