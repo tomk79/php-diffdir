@@ -4,7 +4,7 @@ html, body{
 	color:#333;
 }
 ins{
-	color:#000;
+	color:#060;
 	background-color:#dfd;
 	text-decoration:none;
 }
@@ -168,88 +168,66 @@ del{
 		padding: 2px 0.5em;
 		background-color:#f0f0f0;
 		border-radius: 3px;
-		text-align: center;
+		text-align: right;
+		font-weight: normal;
 	}
 	.Differences tbody.ChangeReplace th{
 		background-color:#ddd;
 	}
 
-	.text-preview__diff_3__textdiff{
-		display: flex;
-		&>div{
+	.textdiff{
+		white-space: pre-wrap;
+		width: 100%;
+		background-color: #f9f9f9;
+		padding: 10px;
+		border: 1px solid #bbb;
+		border-radius: 5px;
+		margin: 10px 0;
+
+		&__row{
+			border-bottom: 1px dotted #bbb;
+			min-height: 1em;
+			padding: 3px 0;
+			color: #999;
+		}
+		&__row:last-child{
+			border-bottom: 0px none;
+		}
+		&__row--changed{
+			background-color: #fefefe;
+			color: #000;
+		}
+		&--two-columns{
+			display: flex;
+			&>div{
+				width: 50%;
+			}
+		}
+
+		th{
+			text-align: right;
+			font-weight: normal;
+			vertical-align: top;
+			padding: 3px 5px;
+			white-space: nowrap;
+			border-left: 3px solid #bbb;
+			border-right: 1px double #bbb;
+			&:first-child{
+				border-left: 0px none;
+			}
+		}
+		&__row--changed th{
+			background-color: #fefefe;
+			color: #000;
+		}
+		td{
 			width: 50%;
+			vertical-align: top;
+			padding: 3px 5px;
 		}
-
-		.differ {
-			width:100%;
-			margin:0;
-			background:#f9f9f9;
-			border:1px solid #ddd;
-			font-size:inherit;
-			border-collapse:separate;
-			border-spacing:0;
-			border:1px solid #ddd;
-		}
-
-		.differ td {
-			padding:1px 4px;
-			font-size:inherit;
-			border-top:1px dotted #eee;
-			border-left:1px solid #ddd;
-		}
-
-		.differ .-line:first-child td {
-			border-top:0;
-		}
-
-		.differ .-line td:first-child {
-			border-left:0;
-		}
-
-		.differ .-number {
-			width:5%;
-			padding-top:.4em;
-			white-space:nowrap;
-			text-align:right;
-			vertical-align:top;
-			font-size:80%;
-			font-family:Arial;
-			border-top:1px solid #e6e6e6;
-			color:#999;
-		}
-
-		.differ .-text {
-			padding-left:8px;
-			border-left:3px double #ddd;
-			background:#fff;
-		}
-
-		.differ .-is-differ .-text {
-			background:#FFFBE6;
-		}
-
-		.differ .-no-differ .-text {
-			color:#777;
-		}
-
-		.differ .-word {
-			display:inline-block;
-			vertical-align:middle;
-			/*font-weight:bold;*/
-		}
-
-		.differ .-word.-source {
-			color:green;
-			background: #dfd;
-		}
-
-		.differ .-word.-change {
-			color:red;
-			background: #fdd;
-		}
-
-		.output {
-			margin-top:40px;
+		&__row--changed td{
+			background-color: #fefefe;
+			color: #000;
 		}
 	}
 

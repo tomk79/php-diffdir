@@ -67,6 +67,6 @@ window.filterList = function(showSelector){
 
 
 $(window).load(function(){
-	compareTextIn('diff_2');
+	compareTextIn('diff_1');
 	compareImagesIn('two-columns');
 });

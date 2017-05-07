@@ -212,6 +212,7 @@ class htmlreport{
 			print '	<button type="button" class="btn btn-default" data-text-in="diff_1" onclick="compareTextIn(\'diff_1\');">diff 1</button>';
 			print '	<button type="button" class="btn btn-default" data-text-in="diff_2" onclick="compareTextIn(\'diff_2\');">diff 2</button>';
 			print '	<button type="button" class="btn btn-default" data-text-in="diff_3" onclick="compareTextIn(\'diff_3\');">diff 3</button>';
+			print '	<button type="button" class="btn btn-default" data-text-in="diff_4" onclick="compareTextIn(\'diff_4\');">diff 4</button>';
 			print '	<button type="button" class="btn btn-default" data-text-in="after" onclick="compareTextIn(\'after\');">after</button>';
 			print '</div>';
 			print '<div class="text-preview__columns">';
@@ -221,27 +222,33 @@ class htmlreport{
 			print '</code></pre>';
 			print '	</div>';
 
+			$textdiff_results = $this->render_diff_textdiff($bin_before, $bin_after);
 			print '	<div class="text-preview__panel text-preview__diff_1">';
-			print '		<pre><code>';
-			print $this->render_diff_cogpowered_FineDiff($bin_before, $bin_after);
-			print '</code></pre>';
-			print '		<p>* このビューは、 <code>cogpowered/finediff</code> で描画した差分です。</p>';
+			print '		<div>';
+			print $textdiff_results['inline'];
+			print '</div>';
+			print '		<p>* このビューは、ライブラリ <code>TextDiff</code> が検出した差分です。</p>';
 			print '	</div>';
 
 			print '	<div class="text-preview__panel text-preview__diff_2">';
 			print '		<div>';
-			print $this->render_diff_phpspec_php_diff($bin_before, $bin_after);
+			print $textdiff_results['two-columns'];
 			print '</div>';
-			print '		<p>* このビューは、 <code>phpspec/php-diff</code> で描画した差分です。</p>';
+			print '		<p>* このビューは、ライブラリ <code>TextDiff</code> が検出した差分です。</p>';
 			print '	</div>';
 
 			print '	<div class="text-preview__panel text-preview__diff_3">';
-			$diff_result = $this->render_diff_textdiff($bin_before, $bin_after);
-			print '		<div class="text-preview__diff_3__textdiff">';
-			print '			<div>'.$diff_result['source'].'</div>';
-			print '			<div>'.$diff_result['change'].'</div>';
-			print '		</div>';
-			print '		<p>* このビューは、 <code>TextDiff class</code> で描画した差分です。</p>';
+			print '		<pre><code>';
+			print $this->render_diff_cogpowered_FineDiff($bin_before, $bin_after);
+			print '</code></pre>';
+			print '		<p>* このビューは、ライブラリ <code>cogpowered/finediff</code> が検出した差分です。</p>';
+			print '	</div>';
+
+			print '	<div class="text-preview__panel text-preview__diff_4">';
+			print '		<div>';
+			print $this->render_diff_phpspec_php_diff($bin_before, $bin_after);
+			print '</div>';
+			print '		<p>* このビューは、ライブラリ <code>phpspec/php-diff</code> が検出した差分です。</p>';
 			print '	</div>';
 
 			print '	<div class="text-preview__panel text-preview__after">';
@@ -376,23 +383,99 @@ class htmlreport{
 	}
 
 	/**
-	 * TextDiff class で差分を表示
+	 * TextDiff で差分を表示
 	 */
 	private function render_diff_textdiff($bin_before, $bin_after){
 		require_once(__DIR__.'/../libs/textdiff/TextDiff.php');
 		$old_text = @mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
 		$new_text = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
 
-		$diff = new \TextDiff(htmlspecialchars($old_text), htmlspecialchars($new_text));
+		// $old_text = htmlspecialchars( $old_text );
+		// $new_text = htmlspecialchars( $new_text );
+		//
+		// $old_text = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $old_text );
+		// $new_text = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $new_text );
+
+		$diff = new \TextDiff($old_text, $new_text);
 
 		// Get raw data
 		$data = $diff->getData();
+		$rtn = array(
+			'inline'=>'',
+			'two-columns'=>'',
+		);
+		$rtn['inline'] .= '<pre class="textdiff textdiff--inline">';
+		$rtn['two-columns'] .= '<div class="textdiff textdiff--inline">';
+		$rtn['two-columns'] .= '<table>';
+		$rtn['two-columns'] .= '<tbody>';
+		foreach($data as $diff_row){
+			if(!$diff_row['differ']){
+				// 差分のない行
+				$diff_row['change'] = htmlspecialchars($diff_row['change']);
+				$diff_row['change'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $diff_row['change'] );
 
-		// Get HTML data (use table tag)
-		$html = $diff->getHtml();
-		// var_dump($html);
+				$rtn['inline'] .= '<div class="textdiff__row">';
+				$rtn['inline'] .= $diff_row['change'];
+				$rtn['inline'] .= '</div>';
+				$rtn['two-columns'] .= '<tr class="textdiff__row">';
+				$rtn['two-columns'] .= '<th>'.intval($diff_row['line']).'</th>';
+				$rtn['two-columns'] .= '<td>'.$diff_row['change'].'</td>';
+				$rtn['two-columns'] .= '<th>'.intval($diff_row['line']).'</th>';
+				$rtn['two-columns'] .= '<td>'.$diff_row['change'].'</td>';
+				$rtn['two-columns'] .= '</tr>';
+				continue;
+			}
+			$rtn['inline'] .= '<div class="textdiff__row textdiff__row--changed">';
+			$rtn['two-columns'] .= '<tr class="textdiff__row textdiff__row--changed">';
+			$tmp_left = '';
+			$tmp_right = '';
+			foreach($diff_row['words'] as $word){
+				if( is_string($word) ){
+					$word = htmlspecialchars($word);
+					$word = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word );
+					$rtn['inline'] .= $word;
+					$tmp_left .= $word;
+					$tmp_right .= $word;
+				}elseif( is_array($word) ){
+					if( @strlen($word['source']) ){
+						$word['source'] = htmlspecialchars($word['source']);
+						$word['source'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word['source'] );
+						$rtn['inline'] .= '<del>'.$word['source'].'</del>';
+						$tmp_left .= '<del>'.$word['source'].'</del>';
+					}
+					if( @strlen($word['change']) ){
+						$word['change'] = htmlspecialchars($word['change']);
+						$word['change'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word['change'] );
+						$rtn['inline'] .= '<ins>'.$word['change'].'</ins>';
+						$tmp_right .= '<ins>'.$word['change'].'</ins>';
+					}
+				}
+			}
+			$rtn['inline'] .= '</div>';
+			$rtn['two-columns'] .= '<th>'.intval($diff_row['line']).'</th>';
+			$rtn['two-columns'] .= '<td>'.$tmp_left.'</td>';
+			$rtn['two-columns'] .= '<th>'.intval($diff_row['line']).'</th>';
+			$rtn['two-columns'] .= '<td>'.$tmp_right.'</td>';
+			$rtn['two-columns'] .= '</tr>';
+		}
+		$rtn['inline'] .= '</pre>';
+		$rtn['two-columns'] .= '</tbody>';
+		$rtn['two-columns'] .= '</table>';
+		$rtn['two-columns'] .= '</div>';
 
-		return $html;
+		return $rtn;
+
+		// // Get HTML data (use table tag)
+		// $html = $diff->getHtml();
+		// // var_dump($html);
+		//
+		// $rtn = '';
+		// $rtn .= '		<div class="textdiff textdiff--two-columns">';
+		// $rtn .= '			<div>'.$html['source'].'</div>';
+		// $rtn .= '			<div>'.$html['change'].'</div>';
+		// $rtn .= '		</div>';
+		//
+		// return $rtn;
 	}
 
 	/**
