@@ -30,7 +30,7 @@ class htmlreport{
 	 * save diff report index HTML (header)
 	 */
 	public function save_diff_report_index_html_header(){
-		$this->fs->copy_r(__DIR__.'/resources/', $this->conf['output'].'/report/resources/');
+		$this->fs->copy_r(__DIR__.'/../dist/resources/', $this->conf['output'].'/report/resources/');
 		ob_start();?>
 <!DOCTYPE html>
 <html>
@@ -198,31 +198,47 @@ class htmlreport{
 		case 'coffee':
 		case 'styl':
 		case 'jade':
-			?>
-	<div class="code"><pre><code><?php
-$from = @mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
-$to = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
-$options = array(
-	'ignoreWhitespace' => true,
-	'ignoreCase' => true,
-);
-$diff = new \Diff(
-	preg_split('/\r\n|\r|\n/', $from),
-	preg_split('/\r\n|\r|\n/', $to),
-	$options
-);
-// $renderer = new \Diff_Renderer_Html_Inline;
-$renderer = new \Diff_Renderer_Html_SideBySide;
-$diffHtml = $diff->render($renderer);
-// $renderer = new \Diff_Renderer_Text_Unified;
-// $renderer = new \Diff_Renderer_Text_Context;
-// $diffHtml = htmlspecialchars($diff->render($renderer));
-if( strlen($diffHtml) ){
-	echo $diffHtml;
-}else{
-	echo htmlspecialchars($bin_after);
-}
-?></code></pre></div><?php
+
+			$text_before = @mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+			$text_after  = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+
+			print '<div class="text-preview">';
+			print '<div class="btn-group" role="group">';
+			print '	<button type="button" class="btn btn-default" onclick="compareImagesInTwoColumns();">before</button>';
+			print '	<button type="button" class="btn btn-default" onclick="compareImagesInPilingUp();">diff 1</button>';
+			print '	<button type="button" class="btn btn-default" onclick="compareImagesInPilingUp();">diff 2</button>';
+			print '	<button type="button" class="btn btn-default" onclick="compareImagesInTwoColumns();">after</button>';
+			print '</div>';
+			print '<div class="text-preview__columns">';
+			print '	<div class="text-preview__before">';
+			print '		<p>before</p>';
+			print '		<div class="code"><pre><code>';
+			print htmlspecialchars($text_before);
+			print '</code></pre></div>';
+			print '	</div>';
+
+			print '	<div class="text-preview__diff">';
+			print '		<p>diff</p>';
+			print '		<div class="code"><pre><code>';
+			print $this->render_diff_cogpowered_FineDiff($bin_before, $bin_after);
+			print '</code></pre></div>';
+			print '	</div>';
+
+			print '	<div class="text-preview__diff">';
+			print '		<p>diff</p>';
+			print '		<div class="code"><pre><code>';
+			print $this->render_diff_phpspec_php_diff($bin_before, $bin_after);
+			print '</code></pre></div>';
+			print '	</div>';
+
+			print '	<div class="text-preview__after">';
+			print '		<p>after</p>';
+			print '		<div class="code"><pre><code>';
+			print htmlspecialchars($text_after);
+			print '</code></pre></div>';
+			print '	</div>';
+			print '</div>';
+
 			break;
 		case 'jpg':
 		case 'jpeg':
@@ -302,6 +318,41 @@ if( strlen($diffHtml) ){
 		$this->fs->mkdir_r( dirname( $path_diffHtml ) );
 		$this->fs->save_file( $path_diffHtml, $src_html_diff );
 		return true;
+	}
+
+	/**
+	 * cogpowered/finediff で差分を表示
+	 */
+	private function render_diff_cogpowered_FineDiff($bin_before, $bin_after){
+		$diff = new \cogpowered\FineDiff\Diff;
+		return $diff->render(
+			@mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order()),
+			@mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order())
+		);
+	}
+
+	/**
+	 * phpspec/php-diff で差分を表示
+	 */
+	private function render_diff_phpspec_php_diff($bin_before, $bin_after){
+		$from = @mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+		$to = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+		$options = array(
+			'ignoreWhitespace' => true,
+			'ignoreCase' => true,
+		);
+		$diff = new \Diff(
+			preg_split('/\r\n|\r|\n/', $from),
+			preg_split('/\r\n|\r|\n/', $to),
+			$options
+		);
+		// $renderer = new \Diff_Renderer_Html_Inline;
+		$renderer = new \Diff_Renderer_Html_SideBySide;
+		$diffHtml = $diff->render($renderer);
+		// $renderer = new \Diff_Renderer_Text_Unified;
+		// $renderer = new \Diff_Renderer_Text_Context;
+		// $diffHtml = htmlspecialchars($diff->render($renderer));
+		return $diffHtml;
 	}
 
 }
