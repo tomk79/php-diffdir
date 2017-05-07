@@ -142,3 +142,57 @@ del {
     text-align: center; }
   .text-preview .Differences tbody.ChangeReplace th {
     background-color: #ddd; }
+  .text-preview .text-preview__diff_3__textdiff {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex; }
+    .text-preview .text-preview__diff_3__textdiff > div {
+      width: 50%; }
+    .text-preview .text-preview__diff_3__textdiff .differ {
+      width: 100%;
+      margin: 0;
+      background: #f9f9f9;
+      border: 1px solid #ddd;
+      font-size: inherit;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #ddd; }
+    .text-preview .text-preview__diff_3__textdiff .differ td {
+      padding: 1px 4px;
+      font-size: inherit;
+      border-top: 1px dotted #eee;
+      border-left: 1px solid #ddd; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-line:first-child td {
+      border-top: 0; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-line td:first-child {
+      border-left: 0; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-number {
+      width: 5%;
+      padding-top: .4em;
+      white-space: nowrap;
+      text-align: right;
+      vertical-align: top;
+      font-size: 80%;
+      font-family: Arial;
+      border-top: 1px solid #e6e6e6;
+      color: #999; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-text {
+      padding-left: 8px;
+      border-left: 3px double #ddd;
+      background: #fff; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-is-differ .-text {
+      background: #FFFBE6; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-no-differ .-text {
+      color: #777; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-word {
+      display: inline-block;
+      vertical-align: middle;
+      /*font-weight:bold;*/ }
+    .text-preview .text-preview__diff_3__textdiff .differ .-word.-source {
+      color: green;
+      background: #dfd; }
+    .text-preview .text-preview__diff_3__textdiff .differ .-word.-change {
+      color: red;
+      background: #fdd; }
+    .text-preview .text-preview__diff_3__textdiff .output {
+      margin-top: 40px; }

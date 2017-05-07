@@ -211,6 +211,7 @@ class htmlreport{
 			print '	<button type="button" class="btn btn-default" data-text-in="before" onclick="compareTextIn(\'before\');">before</button>';
 			print '	<button type="button" class="btn btn-default" data-text-in="diff_1" onclick="compareTextIn(\'diff_1\');">diff 1</button>';
 			print '	<button type="button" class="btn btn-default" data-text-in="diff_2" onclick="compareTextIn(\'diff_2\');">diff 2</button>';
+			print '	<button type="button" class="btn btn-default" data-text-in="diff_3" onclick="compareTextIn(\'diff_3\');">diff 3</button>';
 			print '	<button type="button" class="btn btn-default" data-text-in="after" onclick="compareTextIn(\'after\');">after</button>';
 			print '</div>';
 			print '<div class="text-preview__columns">';
@@ -232,6 +233,15 @@ class htmlreport{
 			print $this->render_diff_phpspec_php_diff($bin_before, $bin_after);
 			print '</div>';
 			print '		<p>* このビューは、 <code>phpspec/php-diff</code> で描画した差分です。</p>';
+			print '	</div>';
+
+			print '	<div class="text-preview__panel text-preview__diff_3">';
+			$diff_result = $this->render_diff_textdiff($bin_before, $bin_after);
+			print '		<div class="text-preview__diff_3__textdiff">';
+			print '			<div>'.$diff_result['source'].'</div>';
+			print '			<div>'.$diff_result['change'].'</div>';
+			print '		</div>';
+			print '		<p>* このビューは、 <code>TextDiff class</code> で描画した差分です。</p>';
 			print '	</div>';
 
 			print '	<div class="text-preview__panel text-preview__after">';
@@ -363,6 +373,26 @@ class htmlreport{
 			return '<pre><code>'.htmlspecialchars($bin_after).'</code></pre>';
 		}
 		return $diffHtml;
+	}
+
+	/**
+	 * TextDiff class で差分を表示
+	 */
+	private function render_diff_textdiff($bin_before, $bin_after){
+		require_once(__DIR__.'/../libs/textdiff/TextDiff.php');
+		$old_text = @mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+		$new_text = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
+
+		$diff = new \TextDiff(htmlspecialchars($old_text), htmlspecialchars($new_text));
+
+		// Get raw data
+		$data = $diff->getData();
+
+		// Get HTML data (use table tag)
+		$html = $diff->getHtml();
+		// var_dump($html);
+
+		return $html;
 	}
 
 	/**
