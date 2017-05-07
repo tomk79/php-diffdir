@@ -1,14 +1,14 @@
 <?php
 /**
  * tomk79/diffdir
- * 
+ *
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
 namespace tomk79;
 
 /**
  * tomk79/diffdir core class
- * 
+ *
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
 class diffdir{
@@ -22,7 +22,7 @@ class diffdir{
 
 	/**
 	 * constructor
-	 * 
+	 *
 	 * @param string $before 比較対象(before) 必須
 	 * @param string $after 比較対象(after) 必須
 	 * @param array $conf config
@@ -139,7 +139,35 @@ class diffdir{
 			$htmlreport->save_diff_report_html( $repo );
 
 			// 差分を知らせるHTMLのindex.html(一覧)を生成
-			$htmlreport->save_diff_report_index_html_list( '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'"><a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">'.htmlspecialchars($repo['path']).'</a></li>' );
+			$html_index_html_list = '';
+			$html_index_html_list .= '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'">';
+			$html_index_html_list .= '<a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">';
+			$item_type = ($repo['after_info']['type'] ? $repo['after_info']['type'] : $repo['before_info']['type']);
+			switch($item_type){
+				case 'file':
+					$html_index_html_list .= '<span class="glyphicon glyphicon-file" style="margin-right: 0.5em;"></span>';
+					break;
+				case 'dir':
+					$html_index_html_list .= '<span class="glyphicon glyphicon-folder-open" style="margin-right: 0.5em;"></span>';
+					break;
+			}
+			$html_index_html_list .= htmlspecialchars($repo['path']);
+			switch( @strtolower($repo['status']) ){
+				case 'added':
+					$html_index_html_list .= '<span class="label label-primary">A</span>';
+					break;
+				case 'changed':
+					$html_index_html_list .= '<span class="label label-warning">C</span>';
+					break;
+				case 'deleted':
+					$html_index_html_list .= '<span class="label label-danger">D</span>';
+					break;
+				default:
+					break;
+			}
+			$html_index_html_list .= '</a>';
+			$html_index_html_list .= '</li>';
+			$htmlreport->save_diff_report_index_html_list( $html_index_html_list );
 
 			$src_csv = $this->fs->mk_csv( array( $csv ) );
 			@error_log( $src_csv, 3, $this->conf['output'].'/report/diffdir.csv' );

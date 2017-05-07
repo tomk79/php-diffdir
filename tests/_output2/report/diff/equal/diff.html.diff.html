@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <title>diff: equal/diff.html</title>
-<link rel="stylesheet" href="../../resources/fess-1.2.2.css" />
 <script src="../../resources/jquery-1.10.1.min.js"></script>
 <link rel="stylesheet" href="../../resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="../../resources/bootstrap/css/bootstrap-theme.css" />
@@ -15,14 +14,55 @@
 <div class="theme_outline">
 <h1>equal/diff.html</h1>
 <p>
-file</p>
+<span class="label label-warning">CHANGED</span><span style="width: 10px;"></span>
+<span class="glyphicon glyphicon-file"></span> FILE</p>
 <div class="contents">
 
-<div class="unit">
-	<div class="code"><pre><code><table class="Differences DifferencesSideBySide"><thead><tr><th colspan="2">Old Version</th><th colspan="2">New Version</th></tr></thead><tbody class="ChangeEqual"><tr><th>1</th><td class="Left"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td><th>1</th><td class="Right"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td></tr><tr><th>2</th><td class="Left"><span>&lt;html&gt;</span>&nbsp;</td><th>2</th><td class="Right"><span>&lt;html&gt;</span>&nbsp;</td></tr><tr><th>3</th><td class="Left"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td><th>3</th><td class="Right"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>4</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<del>A</del>&lt;/title&gt;</span>&nbsp;</td><th>4</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<ins>B</ins>&lt;/title&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>5</th><td class="Left"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td><th>5</th><td class="Right"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td></tr><tr><th>6</th><td class="Left"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td><th>6</th><td class="Right"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>7</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<del>A</del>&lt;/h1&gt;</span>&nbsp;</td><th>7</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<ins>B</ins>&lt;/h1&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>8</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;このファイルはAとBで差分があります。&lt;/p&gt;</span>&nbsp;</td><th>8</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;このファイルはAとBで差分があります。&lt;/p&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>9</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;<del>u</del>l&gt;</span>&nbsp;</td><th>9</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;<ins>o</ins>l&gt;</span></td></tr><tr><th>10</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;li&gt;このテキストは <del>A</del> にだけ表示されます。&lt;/li&gt;</span>&nbsp;</td><th>10</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;li&gt;このテキストは <ins>B</ins> にだけ表示されます。&lt;/li&gt;</span></td></tr><tr><th>11</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;/<del>u</del>l&gt;</span>&nbsp;</td><th>11</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;/<ins>o</ins>l&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>12</th><td class="Left"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td><th>12</th><td class="Right"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td></tr><tr><th>13</th><td class="Left"><span>&lt;/html&gt;</span>&nbsp;</td><th>13</th><td class="Right"><span>&lt;/html&gt;</span>&nbsp;</td></tr><tr><th>14</th><td class="Left"><span></span>&nbsp;</td><th>14</th><td class="Right"><span></span>&nbsp;</td></tr></tbody></table></code></pre></div></div>
+<div class="diff-main-view">
+<div class="text-preview"><div class="btn-group text-preview__btns" role="group">	<button type="button" class="btn btn-default" data-text-in="before" onclick="compareTextIn('before');">before</button>	<button type="button" class="btn btn-default" data-text-in="diff_1" onclick="compareTextIn('diff_1');">diff 1</button>	<button type="button" class="btn btn-default" data-text-in="diff_2" onclick="compareTextIn('diff_2');">diff 2</button>	<button type="button" class="btn btn-default" data-text-in="after" onclick="compareTextIn('after');">after</button></div><div class="text-preview__columns">	<div class="text-preview__panel text-preview__before">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff-A&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff-A&lt;/h1&gt;
+		&lt;p&gt;このファイルはAとBで差分があります。&lt;/p&gt;
+		&lt;ul&gt;
+			&lt;li&gt;このテキストは A にだけ表示されます。&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>	</div>	<div class="text-preview__panel text-preview__diff_1">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff-<del>A</del><ins>B</ins>&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff-<del>A</del><ins>B</ins>&lt;/h1&gt;
+		&lt;p&gt;このファイルはAとBで差分があります。&lt;/p&gt;
+		&lt;<del>u</del><ins>o</ins>l&gt;
+			&lt;li&gt;このテキストは <del>A</del><ins>B</ins> にだけ表示されます。&lt;/li&gt;
+		&lt;/<del>u</del><ins>o</ins>l&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>		<p>* このビューは、 <code>cogpowered/finediff</code> で描画した差分です。</p>	</div>	<div class="text-preview__panel text-preview__diff_2">		<div><table class="Differences DifferencesSideBySide"><thead><tr><th colspan="2">Old Version</th><th colspan="2">New Version</th></tr></thead><tbody class="ChangeEqual"><tr><th>1</th><td class="Left"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td><th>1</th><td class="Right"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td></tr><tr><th>2</th><td class="Left"><span>&lt;html&gt;</span>&nbsp;</td><th>2</th><td class="Right"><span>&lt;html&gt;</span>&nbsp;</td></tr><tr><th>3</th><td class="Left"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td><th>3</th><td class="Right"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>4</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<del>A</del>&lt;/title&gt;</span>&nbsp;</td><th>4</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<ins>B</ins>&lt;/title&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>5</th><td class="Left"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td><th>5</th><td class="Right"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td></tr><tr><th>6</th><td class="Left"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td><th>6</th><td class="Right"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>7</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<del>A</del>&lt;/h1&gt;</span>&nbsp;</td><th>7</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<ins>B</ins>&lt;/h1&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>8</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;このファイルはAとBで差分があります。&lt;/p&gt;</span>&nbsp;</td><th>8</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;このファイルはAとBで差分があります。&lt;/p&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>9</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;<del>u</del>l&gt;</span>&nbsp;</td><th>9</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;<ins>o</ins>l&gt;</span></td></tr><tr><th>10</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;li&gt;このテキストは <del>A</del> にだけ表示されます。&lt;/li&gt;</span>&nbsp;</td><th>10</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&lt;li&gt;このテキストは <ins>B</ins> にだけ表示されます。&lt;/li&gt;</span></td></tr><tr><th>11</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;/<del>u</del>l&gt;</span>&nbsp;</td><th>11</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;/<ins>o</ins>l&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>12</th><td class="Left"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td><th>12</th><td class="Right"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td></tr><tr><th>13</th><td class="Left"><span>&lt;/html&gt;</span>&nbsp;</td><th>13</th><td class="Right"><span>&lt;/html&gt;</span>&nbsp;</td></tr><tr><th>14</th><td class="Left"><span></span>&nbsp;</td><th>14</th><td class="Right"><span></span>&nbsp;</td></tr></tbody></table></div>		<p>* このビューは、 <code>phpspec/php-diff</code> で描画した差分です。</p>	</div>	<div class="text-preview__panel text-preview__after">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff-B&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff-B&lt;/h1&gt;
+		&lt;p&gt;このファイルはAとBで差分があります。&lt;/p&gt;
+		&lt;ol&gt;
+			&lt;li&gt;このテキストは B にだけ表示されます。&lt;/li&gt;
+		&lt;/ol&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>	</div></div></div>
+</div>
 
 <div>
-<table class="def" style="width:100%;">
+<table class="table" style="width:100%;">
 	<thead>
 		<tr>
 			<th style="width:20%;">&nbsp;</th>
@@ -36,12 +76,12 @@ file</p>
 	</tr>
 	<tr>
 		<th>status</th>
-		<td colspan="2">changed</td>
+		<td colspan="2"><span class="label label-warning">CHANGED</span></td>
 	</tr>
 	<tr>
 		<th>type</th>
-					<td>file</td>
-			<td>file</td>
+					<td><span class="glyphicon glyphicon-file"></span> FILE</td>
+			<td><span class="glyphicon glyphicon-file"></span> FILE</td>
 			</tr>
 	<tr>
 		<th>size</th>

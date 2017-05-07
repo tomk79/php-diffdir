@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <title>diff: file_to_dir</title>
-<link rel="stylesheet" href="../resources/fess-1.2.2.css" />
 <script src="../resources/jquery-1.10.1.min.js"></script>
 <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap-theme.css" />
@@ -15,14 +14,16 @@
 <div class="theme_outline">
 <h1>file_to_dir</h1>
 <p>
-file to dir</p>
+<span class="label label-warning">CHANGED</span><span style="width: 10px;"></span>
+<span class="glyphicon glyphicon-file"></span> FILE to <span class="glyphicon glyphicon-folder-open"></span> DIRECTORY</p>
 <div class="contents">
 
-<div class="unit">
+<div class="diff-main-view">
 <p>比較できない拡張子です。</p></div>
+</div>
 
 <div>
-<table class="def" style="width:100%;">
+<table class="table" style="width:100%;">
 	<thead>
 		<tr>
 			<th style="width:20%;">&nbsp;</th>
@@ -36,12 +37,12 @@ file to dir</p>
 	</tr>
 	<tr>
 		<th>status</th>
-		<td colspan="2">changed</td>
+		<td colspan="2"><span class="label label-warning">CHANGED</span></td>
 	</tr>
 	<tr>
 		<th>type</th>
-					<td>file</td>
-			<td>dir</td>
+					<td><span class="glyphicon glyphicon-file"></span> FILE</td>
+			<td><span class="glyphicon glyphicon-folder-open"></span> DIRECTORY</td>
 			</tr>
 	<tr>
 		<th>size</th>

@@ -37,7 +37,6 @@ class htmlreport{
 	<head>
 		<meta charset="UTF-8" />
 		<title>diffdir</title>
-		<link rel="stylesheet" href="./resources/fess-1.2.2.css" />
 		<script src="./resources/jquery-1.10.1.min.js"></script>
 		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap-theme.css" />
@@ -61,17 +60,17 @@ class htmlreport{
 		</script>
 	</head>
 	<body>
-		<div id="outline">
-			<div id="diffpreview">
-				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
-			</div>
-			<div id="difflist">
-				<div class="btn-group" role="group">
-					<button type="button" class="btn btn-default" onclick="showAllList();">すべて表示</button>
-					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.changed,.added,.deleted)');">差分のみ</button>
-					<button type="button" class="btn btn-default" onclick="filterList('>li:not(.file)');">ファイルのみ</button>
+		<div id="outline" class="outline">
+			<div id="difflist" class="difflist">
+				<div class="difflist__btns">
+					<div class="btn-group" role="group">
+						<button type="button" class="btn btn-default" onclick="showAllList();">すべて表示</button>
+						<button type="button" class="btn btn-default" onclick="filterList('>li:not(.changed,.added,.deleted)');">差分のみ</button>
+						<button type="button" class="btn btn-default" onclick="filterList('>li:not(.file)');">ファイルのみ</button>
+					</div>
 				</div>
-				<ul><?php
+				<div class="btn-group difflist__list">
+					<ul><?php
 		$html = ob_get_clean();
 		$this->fs->save_file($this->conf['output'].'/report/index.html', $html);
 		return true;
@@ -91,6 +90,10 @@ class htmlreport{
 	public function save_diff_report_index_html_footer(){
 		ob_start();?>
 </ul>
+				</div>
+			</div>
+			<div id="diffpreview" class="diffpreview">
+				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
 			</div>
 		</div>
 	</body>
@@ -113,7 +116,6 @@ class htmlreport{
 <head>
 <meta charset="UTF-8" />
 <title>diff: <?= htmlspecialchars($repo['path']); ?></title>
-<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/fess-1.2.2.css" />
 <script src="<?= htmlspecialchars($path_base); ?>resources/jquery-1.10.1.min.js"></script>
 <link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap-theme.css" />
@@ -125,19 +127,21 @@ class htmlreport{
 <div class="theme_outline">
 <h1><?= htmlspecialchars($repo['path']); ?></h1>
 <p>
+<?= $this->render_item_status_label($repo['status']) ?>
+<span style="width: 10px;"></span>
 <?php if( $repo['before_info']['type'] == $repo['after_info']['type'] ){ ?>
-<?= htmlspecialchars($repo['after_info']['type']) ?>
+<?= $this->render_item_type($repo['after_info']['type']) ?>
 <?php }elseif( !strlen($repo['before_info']['type']) ){ ?>
-<?= htmlspecialchars($repo['after_info']['type']) ?>
+<?= $this->render_item_type($repo['after_info']['type']) ?>
 <?php }elseif( !strlen($repo['after_info']['type']) ){ ?>
-<?= htmlspecialchars($repo['before_info']['type']) ?>
+<?= $this->render_item_type($repo['before_info']['type']) ?>
 <?php }else{ ?>
-<?= htmlspecialchars($repo['before_info']['type']) ?> to <?= htmlspecialchars($repo['after_info']['type']) ?>
+<?= $this->render_item_type($repo['before_info']['type']) ?> to <?= $this->render_item_type($repo['after_info']['type']) ?>
 <?php } ?>
 </p>
 <div class="contents">
 
-<div class="unit">
+<div class="diff-main-view">
 <?php if( $repo['before_info']['type'] == 'file' || $repo['after_info']['type'] == 'file' ){ ?>
 <?php
 	$bin_before = @$this->fs->read_file( $this->before.$repo['path'] );
@@ -203,39 +207,37 @@ class htmlreport{
 			$text_after  = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
 
 			print '<div class="text-preview">';
-			print '<div class="btn-group" role="group">';
-			print '	<button type="button" class="btn btn-default" onclick="compareImagesInTwoColumns();">before</button>';
-			print '	<button type="button" class="btn btn-default" onclick="compareImagesInPilingUp();">diff 1</button>';
-			print '	<button type="button" class="btn btn-default" onclick="compareImagesInPilingUp();">diff 2</button>';
-			print '	<button type="button" class="btn btn-default" onclick="compareImagesInTwoColumns();">after</button>';
+			print '<div class="btn-group text-preview__btns" role="group">';
+			print '	<button type="button" class="btn btn-default" data-text-in="before" onclick="compareTextIn(\'before\');">before</button>';
+			print '	<button type="button" class="btn btn-default" data-text-in="diff_1" onclick="compareTextIn(\'diff_1\');">diff 1</button>';
+			print '	<button type="button" class="btn btn-default" data-text-in="diff_2" onclick="compareTextIn(\'diff_2\');">diff 2</button>';
+			print '	<button type="button" class="btn btn-default" data-text-in="after" onclick="compareTextIn(\'after\');">after</button>';
 			print '</div>';
 			print '<div class="text-preview__columns">';
-			print '	<div class="text-preview__before">';
-			print '		<p>before</p>';
-			print '		<div class="code"><pre><code>';
+			print '	<div class="text-preview__panel text-preview__before">';
+			print '		<pre><code>';
 			print htmlspecialchars($text_before);
-			print '</code></pre></div>';
+			print '</code></pre>';
 			print '	</div>';
 
-			print '	<div class="text-preview__diff">';
-			print '		<p>diff</p>';
-			print '		<div class="code"><pre><code>';
+			print '	<div class="text-preview__panel text-preview__diff_1">';
+			print '		<pre><code>';
 			print $this->render_diff_cogpowered_FineDiff($bin_before, $bin_after);
-			print '</code></pre></div>';
+			print '</code></pre>';
+			print '		<p>* このビューは、 <code>cogpowered/finediff</code> で描画した差分です。</p>';
 			print '	</div>';
 
-			print '	<div class="text-preview__diff">';
-			print '		<p>diff</p>';
-			print '		<div class="code"><pre><code>';
+			print '	<div class="text-preview__panel text-preview__diff_2">';
+			print '		<div>';
 			print $this->render_diff_phpspec_php_diff($bin_before, $bin_after);
-			print '</code></pre></div>';
+			print '</div>';
+			print '		<p>* このビューは、 <code>phpspec/php-diff</code> で描画した差分です。</p>';
 			print '	</div>';
 
-			print '	<div class="text-preview__after">';
-			print '		<p>after</p>';
-			print '		<div class="code"><pre><code>';
+			print '	<div class="text-preview__panel text-preview__after">';
+			print '		<pre><code>';
 			print htmlspecialchars($text_after);
-			print '</code></pre></div>';
+			print '</code></pre>';
 			print '	</div>';
 			print '</div>';
 
@@ -246,26 +248,26 @@ class htmlreport{
 		case 'gif':
 		case 'png':
 			print '<div class="image-preview">';
-			print '<div class="btn-group" role="group">';
-			print '	<button type="button" class="btn btn-default" onclick="compareImagesInTwoColumns();">並べて比較</button>';
-			print '	<button type="button" class="btn btn-default" onclick="compareImagesInPilingUp();">重ねて比較</button>';
-			print '</div>';
-			print '<div class="image-preview--twocolumns">';
+			print '	<div class="btn-group image-preview__btns" role="group">';
+			print '		<button type="button" class="btn btn-default" data-image-in="two-columns" onclick="compareImagesIn(\'two-columns\');">並べて比較</button>';
+			print '		<button type="button" class="btn btn-default" data-image-in="piling-up" onclick="compareImagesIn(\'piling-up\');">重ねて比較</button>';
+			print '	</div>';
+			print '	<div class="image-preview__panel image-preview__two-columns">';
 			if(@strlen($bin_before)){
 				print '<div class="image-preview--before">';
-				print '<p>変更前</p>';
+				print '<h2>before</h2>';
 				print '<img src="data:image/png;base64,'.htmlspecialchars( base64_encode($bin_before) ).'" alt="変更前の画像プレビュー" />';
 				print '</div>';
 			}
 			if(@strlen($bin_after)){
 				print '<div class="image-preview--after">';
-				print '<p>変更後</p>';
+				print '<h2>after</h2>';
 				print '<img src="data:image/png;base64,'.htmlspecialchars( base64_encode($bin_after) ).'" alt="変更後の画像プレビュー" />';
 				print '</div>';
 			}
-			print '</div>';
-			print '<div class="image-preview--pilingup">';
-			print '</div>';
+			print '	</div>';
+			print '	<div class="image-preview__panel image-preview__piling-up">';
+			print '	</div>';
 			print '</div>';
 			break;
 		default:
@@ -277,9 +279,10 @@ class htmlreport{
 	<p>This item is a directory.</p>
 <?php } ?>
 </div>
+</div>
 
 <div>
-<table class="def" style="width:100%;">
+<table class="table" style="width:100%;">
 	<thead>
 		<tr>
 			<th style="width:20%;">&nbsp;</th>
@@ -293,7 +296,7 @@ class htmlreport{
 	</tr>
 	<tr>
 		<th>status</th>
-		<td colspan="2"><?= htmlspecialchars($repo['status']) ?></td>
+		<td colspan="2"><?= $this->render_item_status_label($repo['status']) ?></td>
 	</tr>
 <?php foreach( $repo['before_info'] as $key=>$val ){ ?>
 	<tr>
@@ -301,6 +304,9 @@ class htmlreport{
 		<?php if($key=='timestamp'){ ?>
 			<td><?= htmlspecialchars((strlen($repo['before_info'][$key])?@date('Y-m-d H:i:s',$repo['before_info'][$key]):'---')) ?></td>
 			<td><?= htmlspecialchars((strlen($repo['after_info'][$key])?@date('Y-m-d H:i:s',$repo['after_info'][$key]):'---')) ?></td>
+		<?php }elseif($key=='type'){ ?>
+			<td><?= (strlen($repo['before_info'][$key])?$this->render_item_type($repo['before_info'][$key]):'---') ?></td>
+			<td><?= (strlen($repo['after_info'][$key])?$this->render_item_type($repo['after_info'][$key]):'---') ?></td>
 		<?php }else{ ?>
 			<td><?= htmlspecialchars((strlen($repo['before_info'][$key])?$repo['before_info'][$key]:'---')) ?></td>
 			<td><?= htmlspecialchars((strlen($repo['after_info'][$key])?$repo['after_info'][$key]:'---')) ?></td>
@@ -319,6 +325,7 @@ class htmlreport{
 		$this->fs->save_file( $path_diffHtml, $src_html_diff );
 		return true;
 	}
+
 
 	/**
 	 * cogpowered/finediff で差分を表示
@@ -352,7 +359,48 @@ class htmlreport{
 		// $renderer = new \Diff_Renderer_Text_Unified;
 		// $renderer = new \Diff_Renderer_Text_Context;
 		// $diffHtml = htmlspecialchars($diff->render($renderer));
+		if($bin_before === $bin_after){
+			return '<pre><code>'.htmlspecialchars($bin_after).'</code></pre>';
+		}
 		return $diffHtml;
+	}
+
+	/**
+	 * ファイルの種類を描画
+	 */
+	private function render_item_type($type){
+		switch( strtolower( $type ) ){
+			case 'file':
+				$rtn = '<span class="glyphicon glyphicon-file"></span> FILE';
+				break;
+			case 'dir':
+				$rtn = '<span class="glyphicon glyphicon-folder-open"></span> DIRECTORY';
+				break;
+			default:
+				$rtn = '<span class="glyphicon glyphicon-asterisk"></span> '.strtoupper($type);
+				break;
+		}
+		return $rtn;
+	}
+
+	/**
+	 * ステータスラベルを表示
+	 */
+	private function render_item_status_label($status){
+		if( !@strlen($status) ){
+			$status = 'same';
+		}
+		$label_type = 'default';
+		switch(strtolower($status)){
+			case 'deleted':
+				$label_type = 'danger'; break;
+			case 'changed':
+				$label_type = 'warning'; break;
+			case 'added':
+				$label_type = 'primary'; break;
+		}
+		$rtn = '<span class="label label-'.$label_type.'">'.htmlspecialchars( strtoupper($status) ).'</span>';
+		return $rtn;
 	}
 
 }

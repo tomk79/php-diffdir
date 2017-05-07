@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8" />
 <title>diff: diff.html</title>
-<link rel="stylesheet" href="../resources/fess-1.2.2.css" />
 <script src="../resources/jquery-1.10.1.min.js"></script>
 <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="../resources/bootstrap/css/bootstrap-theme.css" />
@@ -15,14 +14,49 @@
 <div class="theme_outline">
 <h1>diff.html</h1>
 <p>
-file</p>
+<span class="label label-warning">CHANGED</span><span style="width: 10px;"></span>
+<span class="glyphicon glyphicon-file"></span> FILE</p>
 <div class="contents">
 
-<div class="unit">
-	<div class="code"><pre><code><table class="Differences DifferencesSideBySide"><thead><tr><th colspan="2">Old Version</th><th colspan="2">New Version</th></tr></thead><tbody class="ChangeEqual"><tr><th>1</th><td class="Left"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td><th>1</th><td class="Right"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td></tr><tr><th>2</th><td class="Left"><span>&lt;html&gt;</span>&nbsp;</td><th>2</th><td class="Right"><span>&lt;html&gt;</span>&nbsp;</td></tr><tr><th>3</th><td class="Left"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td><th>3</th><td class="Right"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>4</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<del>A</del>&lt;/title&gt;</span>&nbsp;</td><th>4</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<ins>B</ins>&lt;/title&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>5</th><td class="Left"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td><th>5</th><td class="Right"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td></tr><tr><th>6</th><td class="Left"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td><th>6</th><td class="Right"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>7</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<del>A</del>&lt;/h1&gt;</span>&nbsp;</td><th>7</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<ins>B</ins>&lt;/h1&gt;</span></td></tr><tr><th>8</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<del>接頭辞： このファイルはAとBで差分があります</del>。&lt;/p&gt;</span>&nbsp;</td><th>8</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<ins>このファイルはAとBで差分があります ：接尾辞</ins>。&lt;/p&gt;</span></td></tr><tr><th>9</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<del>武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、甲斐の守護大名・戦国大名。甲斐源氏の嫡流にあたる甲斐武田家第19代当主。諱は晴信、通称は太郎（たろう）。「信玄」とは（出家後の）法名で、正式には徳栄軒信玄。1915年（大正4年）11月10日に従三位を贈られる</del>。&lt;/p&gt;</span>&nbsp;</td><th>9</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<ins>甲斐の守護を務めた甲斐源氏武田家第18代・武田信虎の嫡男。先代・信虎期に武田氏は守護大名から戦国大名化し国内統一を達成し、信玄も体制を継承して隣国・信濃に侵攻する。その過程で越後国の上杉謙信（長尾景虎）と五次にわたると言われる川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した</ins>。&lt;/p&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>10</th><td class="Left"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td><th>10</th><td class="Right"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td></tr><tr><th>11</th><td class="Left"><span>&lt;/html&gt;</span>&nbsp;</td><th>11</th><td class="Right"><span>&lt;/html&gt;</span>&nbsp;</td></tr><tr><th>12</th><td class="Left"><span></span>&nbsp;</td><th>12</th><td class="Right"><span></span>&nbsp;</td></tr></tbody></table></code></pre></div></div>
+<div class="diff-main-view">
+<div class="text-preview"><div class="btn-group text-preview__btns" role="group">	<button type="button" class="btn btn-default" data-text-in="before" onclick="compareTextIn('before');">before</button>	<button type="button" class="btn btn-default" data-text-in="diff_1" onclick="compareTextIn('diff_1');">diff 1</button>	<button type="button" class="btn btn-default" data-text-in="diff_2" onclick="compareTextIn('diff_2');">diff 2</button>	<button type="button" class="btn btn-default" data-text-in="after" onclick="compareTextIn('after');">after</button></div><div class="text-preview__columns">	<div class="text-preview__panel text-preview__before">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff-A&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff-A&lt;/h1&gt;
+		&lt;p&gt;接頭辞： このファイルはAとBで差分があります。&lt;/p&gt;
+		&lt;p&gt;武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、甲斐の守護大名・戦国大名。甲斐源氏の嫡流にあたる甲斐武田家第19代当主。諱は晴信、通称は太郎（たろう）。「信玄」とは（出家後の）法名で、正式には徳栄軒信玄。1915年（大正4年）11月10日に従三位を贈られる。&lt;/p&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>	</div>	<div class="text-preview__panel text-preview__diff_1">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff-<del>A</del><ins>B</ins>&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff-<del>A</del><ins>B</ins>&lt;/h1&gt;
+		&lt;p&gt;<del>接頭辞： </del>このファイルはAとBで差分があります<ins> ：接尾辞</ins>。&lt;/p&gt;
+		&lt;p&gt;<del>武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、</del>甲斐の守護<del>大名</del><del></del><ins></ins>甲斐源氏<del>の嫡流にあたる甲斐</del>武田家第1<del>9</del><ins>8</ins>代<ins>・武田信虎の</ins><del></del><ins></ins>。<del>諱</del><ins>先代</ins><del></del><ins></ins>信<ins>虎期</ins><del></del><del>通</del><ins></ins><del></del><ins></ins><ins>氏</ins><del></del><ins></ins><del></del><ins></ins><ins></ins><del>）</del><ins></ins><del></del><ins></ins><ins></ins><del></del><ins></ins>と<del></del><ins></ins><del>家後の）</del><ins></ins><del></del><ins></ins><del></del><del>1915年（大正4年）11月10日</del><ins></ins><del></del><ins></ins><del></del><ins></ins><del></del><ins></ins><del></del><ins></ins>れる<ins>川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した</ins>。&lt;/p&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>		<p>* このビューは、 <code>cogpowered/finediff</code> で描画した差分です。</p>	</div>	<div class="text-preview__panel text-preview__diff_2">		<div><table class="Differences DifferencesSideBySide"><thead><tr><th colspan="2">Old Version</th><th colspan="2">New Version</th></tr></thead><tbody class="ChangeEqual"><tr><th>1</th><td class="Left"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td><th>1</th><td class="Right"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td></tr><tr><th>2</th><td class="Left"><span>&lt;html&gt;</span>&nbsp;</td><th>2</th><td class="Right"><span>&lt;html&gt;</span>&nbsp;</td></tr><tr><th>3</th><td class="Left"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td><th>3</th><td class="Right"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>4</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<del>A</del>&lt;/title&gt;</span>&nbsp;</td><th>4</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff-<ins>B</ins>&lt;/title&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>5</th><td class="Left"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td><th>5</th><td class="Right"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td></tr><tr><th>6</th><td class="Left"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td><th>6</th><td class="Right"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>7</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<del>A</del>&lt;/h1&gt;</span>&nbsp;</td><th>7</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff-<ins>B</ins>&lt;/h1&gt;</span></td></tr><tr><th>8</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<del>接頭辞： このファイルはAとBで差分があります</del>。&lt;/p&gt;</span>&nbsp;</td><th>8</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<ins>このファイルはAとBで差分があります ：接尾辞</ins>。&lt;/p&gt;</span></td></tr><tr><th>9</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<del>武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、甲斐の守護大名・戦国大名。甲斐源氏の嫡流にあたる甲斐武田家第19代当主。諱は晴信、通称は太郎（たろう）。「信玄」とは（出家後の）法名で、正式には徳栄軒信玄。1915年（大正4年）11月10日に従三位を贈られる</del>。&lt;/p&gt;</span>&nbsp;</td><th>9</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<ins>甲斐の守護を務めた甲斐源氏武田家第18代・武田信虎の嫡男。先代・信虎期に武田氏は守護大名から戦国大名化し国内統一を達成し、信玄も体制を継承して隣国・信濃に侵攻する。その過程で越後国の上杉謙信（長尾景虎）と五次にわたると言われる川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した</ins>。&lt;/p&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>10</th><td class="Left"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td><th>10</th><td class="Right"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td></tr><tr><th>11</th><td class="Left"><span>&lt;/html&gt;</span>&nbsp;</td><th>11</th><td class="Right"><span>&lt;/html&gt;</span>&nbsp;</td></tr><tr><th>12</th><td class="Left"><span></span>&nbsp;</td><th>12</th><td class="Right"><span></span>&nbsp;</td></tr></tbody></table></div>		<p>* このビューは、 <code>phpspec/php-diff</code> で描画した差分です。</p>	</div>	<div class="text-preview__panel text-preview__after">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff-B&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff-B&lt;/h1&gt;
+		&lt;p&gt;このファイルはAとBで差分があります ：接尾辞。&lt;/p&gt;
+		&lt;p&gt;甲斐の守護を務めた甲斐源氏武田家第18代・武田信虎の嫡男。先代・信虎期に武田氏は守護大名から戦国大名化し国内統一を達成し、信玄も体制を継承して隣国・信濃に侵攻する。その過程で越後国の上杉謙信（長尾景虎）と五次にわたると言われる川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した。&lt;/p&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>	</div></div></div>
+</div>
 
 <div>
-<table class="def" style="width:100%;">
+<table class="table" style="width:100%;">
 	<thead>
 		<tr>
 			<th style="width:20%;">&nbsp;</th>
@@ -36,12 +70,12 @@ file</p>
 	</tr>
 	<tr>
 		<th>status</th>
-		<td colspan="2">changed</td>
+		<td colspan="2"><span class="label label-warning">CHANGED</span></td>
 	</tr>
 	<tr>
 		<th>type</th>
-					<td>file</td>
-			<td>file</td>
+					<td><span class="glyphicon glyphicon-file"></span> FILE</td>
+			<td><span class="glyphicon glyphicon-file"></span> FILE</td>
 			</tr>
 	<tr>
 		<th>size</th>
@@ -50,8 +84,8 @@ file</p>
 			</tr>
 	<tr>
 		<th>timestamp</th>
-					<td>2017-05-06 19:38:52</td>
-			<td>2017-05-06 19:38:55</td>
+					<td>2017-05-06 19:45:19</td>
+			<td>2017-05-06 19:45:19</td>
 			</tr>
 	<tr>
 		<th>md5</th>

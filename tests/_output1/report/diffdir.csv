@@ -7,7 +7,7 @@
 "common/father.jpg","added",,,"1970-01-01 00:00:00",,,,"file","147920","2015-12-27 06:49:22","128711d9cab94bed5d5fb5ee5bf41533",,"CRLF/CR/LF"
 "crlf.html","changed","file","61","2000-01-01 00:00:00","6ac2d407ed928804432ecba3ebe75599","ASCII","CRLF/CR/LF","file","63","2000-01-01 00:00:00","706e4eb86ab06f6f1f519f2b96ee2582","ASCII","CRLF"
 "crlf_to_lf.html","changed","file","61","1999-12-31 15:00:00","6ac2d407ed928804432ecba3ebe75599","ASCII","CRLF/CR/LF","file","60","2016-01-07 07:40:37","3d348a6462302f747f4a0ab840d841f7","ASCII","LF"
-"diff.html","changed","file","612","2017-05-06 19:38:52","b841cf6bffd4a6a96d852e5d639684de","UTF-8","CRLF","file","836","2017-05-06 19:38:55","9fe3f9f53037adf9669359282936dfbb","UTF-8","CRLF"
+"diff.html","changed","file","612","2017-05-06 19:45:19","b841cf6bffd4a6a96d852e5d639684de","UTF-8","CRLF","file","836","2017-05-06 19:45:19","9fe3f9f53037adf9669359282936dfbb","UTF-8","CRLF"
 "dir_to_file","changed","dir",,"2014-10-07 16:11:16",,,,"file","11","2015-12-26 21:41:22","a8d3b404aff46b071a9f224f04c13197","ASCII","unknown"
 "equal",,"dir",,"2017-02-16 17:10:26",,,,"dir",,"2017-02-16 17:10:26",,,
 "equal/diff.html","changed","file","265","2014-10-07 16:56:41","ff1a718f8b3c1e910d52c7a46ca43765","UTF-8","CRLF","file","265","2014-10-07 16:56:41","f5f2102ce60c6c2a1f3c0affaa09baea","UTF-8","CRLF"
