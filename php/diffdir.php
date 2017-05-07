@@ -141,7 +141,7 @@ class diffdir{
 			// 差分を知らせるHTMLのindex.html(一覧)を生成
 			$html_index_html_list = '';
 			$html_index_html_list .= '<li class="'.htmlspecialchars($repo['status']).' '.htmlspecialchars($repo['before_info']['type']).' '.htmlspecialchars($repo['after_info']['type']).'">';
-			$html_index_html_list .= '<a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" target="diffpreview">';
+			$html_index_html_list .= '<a href="'.htmlspecialchars('diff/'.$repo['path'].'.diff.html').'" data-path="'.htmlspecialchars($repo['path']).'" target="diffpreview">';
 			$item_type = ($repo['after_info']['type'] ? $repo['after_info']['type'] : $repo['before_info']['type']);
 			switch($item_type){
 				case 'file':

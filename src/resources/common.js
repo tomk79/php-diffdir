@@ -1,4 +1,5 @@
 var timerImageChange;
+var path = require('path');
 
 window.compareTextIn = function(target){
 	$('.text-preview__panel').hide();
@@ -69,4 +70,21 @@ window.filterList = function(showSelector){
 $(window).load(function(){
 	compareTextIn('diff_1');
 	compareImagesIn('two-columns');
+
+	var hash = window.location.hash;
+	if(hash){
+		// console.log(hash);
+		hash = hash.replace(/^\#+/, '');
+		hash = path.resolve(hash);
+		hash = hash.replace(/^\/+/, '');
+
+		hash = './diff/'+hash+'.diff.html';
+		// console.log(hash);
+		window.diffpreview.location.href = hash;
+	}
+
+	$('.difflist__list').find('a').on('click', function(e){
+		var $this = $(this);
+		window.location.hash = $this.attr('data-path');
+	})
 });
