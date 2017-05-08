@@ -37,6 +37,8 @@ class htmlreport{
 	<head>
 		<meta charset="UTF-8" />
 		<title>diffdir</title>
+		<meta name="apple-mobile-web-app-capable" content="no" /><meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=1024" />
 		<script src="./resources/jquery-1.10.1.min.js"></script>
 		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="./resources/bootstrap/css/bootstrap-theme.css" />
@@ -51,8 +53,12 @@ class htmlreport{
 					var iframe = document.getElementById('iframe');
 					var difflist = document.getElementById('difflist');
 
-					outline.style.height = window.innerHeight+'px';
-					iframe.height = window.innerHeight;
+					$(outline).css({
+						'height': $(window).innerHeight() -4
+					});
+					$(iframe).css({
+						'height': $(outline).innerHeight() -4
+					});
 				}
 				window.onload = refresh;
 				window.onresize = refresh;
@@ -96,7 +102,7 @@ class htmlreport{
 				</div>
 			</div>
 			<div id="diffpreview" class="diffpreview">
-				<iframe src="./README.html" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
+				<iframe src="./README.html" name="diffpreview" id="iframe"></iframe>
 			</div>
 		</div>
 	</body>
@@ -119,6 +125,8 @@ class htmlreport{
 	<head>
 		<meta charset="UTF-8" />
 		<title>diffdir - README</title>
+		<meta name="apple-mobile-web-app-capable" content="no" /><meta name="format-detection" content="telephone=no" />
+		<meta name="viewport" content="width=1024" />
 		<script src="<?= htmlspecialchars($path_base); ?>resources/jquery-1.10.1.min.js"></script>
 		<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap.css" />
 		<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap-theme.css" />
@@ -163,6 +171,8 @@ $(window).on('load', function(){
 <head>
 <meta charset="UTF-8" />
 <title>diff: <?= htmlspecialchars($repo['path']); ?></title>
+<meta name="apple-mobile-web-app-capable" content="no" /><meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=1024" />
 <script src="<?= htmlspecialchars($path_base); ?>resources/jquery-1.10.1.min.js"></script>
 <link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap-theme.css" />
