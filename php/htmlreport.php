@@ -390,16 +390,16 @@ class htmlreport{
 		$old_text = @mb_convert_encoding( $bin_before, 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
 		$new_text = @mb_convert_encoding( $bin_after , 'UTF-8', 'SJIS-win,Shift-JIS,eucJP-win,EUC-JP,UTF-8,'.mb_detect_order());
 
-		// $old_text = htmlspecialchars( $old_text );
-		// $new_text = htmlspecialchars( $new_text );
-		//
-		// $old_text = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $old_text );
-		// $new_text = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $new_text );
-
 		$diff = new \TextDiff($old_text, $new_text);
 
 		// Get raw data
 		$data = $diff->getData();
+		// echo '<pre>';
+		// ob_start();
+		// var_dump($data);
+		// echo htmlspecialchars(ob_get_clean());
+		// echo '</pre>';
+
 		$rtn = array(
 			'inline'=>'',
 			'two-columns'=>'',
@@ -429,29 +429,32 @@ class htmlreport{
 			$rtn['two-columns'] .= '<tr class="textdiff__row textdiff__row--changed">';
 			$tmp_left = '';
 			$tmp_right = '';
-			foreach($diff_row['words'] as $word){
-				if( is_string($word) ){
-					$word = htmlspecialchars($word);
-					$word = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word );
-					$rtn['inline'] .= $word;
-					$tmp_left .= $word;
-					$tmp_right .= $word;
-				}elseif( is_array($word) ){
-					if( @strlen($word['source']) ){
-						$word['source'] = htmlspecialchars($word['source']);
-						$word['source'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word['source'] );
-						$rtn['inline'] .= '<del>'.$word['source'].'</del>';
-						$tmp_left .= '<del>'.$word['source'].'</del>';
-					}
-					if( @strlen($word['change']) ){
-						$word['change'] = htmlspecialchars($word['change']);
-						$word['change'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word['change'] );
-						$rtn['inline'] .= '<ins>'.$word['change'].'</ins>';
-						$tmp_right .= '<ins>'.$word['change'].'</ins>';
+			if( count($diff_row['words']) ){
+				foreach($diff_row['words'] as $word){
+					if( is_string($word) ){
+						$word = htmlspecialchars($word);
+						$word = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word );
+						$rtn['inline'] .= $word;
+						$tmp_left .= $word;
+						$tmp_right .= $word;
+					}elseif( is_array($word) ){
+						if( @strlen($word['source']) ){
+							$tmp_lf = (!strlen($diff_row['change']) ? "<br />" : "");
+							$word['source'] = htmlspecialchars($word['source']);
+							$word['source'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word['source'] );
+							$rtn['inline'] .= '<del>'.$word['source'].'</del>'.$tmp_lf;
+							$tmp_left .= '<del>'.$word['source'].'</del>'.$tmp_lf;
+						}
+						if( @strlen($word['change']) ){
+							$tmp_lf = (!strlen($diff_row['source']) ? "<br />" : "");
+							$word['change'] = htmlspecialchars($word['change']);
+							$word['change'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $word['change'] );
+							$rtn['inline'] .= '<ins>'.$word['change'].'</ins>'.$tmp_lf;
+							$tmp_right .= '<ins>'.$word['change'].'</ins>'.$tmp_lf;
+						}
 					}
 				}
-			}
-			if( !count($diff_row['words']) ){
+			}else{
 				$diff_row['change'] = htmlspecialchars($diff_row['change']);
 				$diff_row['change'] = preg_replace( '/\r\n|\r|\n/s', '<br />'."\n", $diff_row['change'] );
 				$rtn['inline'] .= '<ins>'.$diff_row['change'].'</ins>';

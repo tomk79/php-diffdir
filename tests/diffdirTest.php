@@ -36,7 +36,7 @@ class diffdirTest extends PHPUnit_Framework_TestCase{
 			__DIR__.'/sample_b/',
 			array( 'output'=>__DIR__.'/_output1/' )
 		);
-		$this->assertFalse( is_dir( $diffdir->is_error() ) );
+		$this->assertFalse( $diffdir->is_error() );
 		$this->assertTrue( is_dir( $diffdir->get_output_dir() ) );
 
 		clearstatcache();
@@ -69,7 +69,7 @@ class diffdirTest extends PHPUnit_Framework_TestCase{
 			__DIR__.'/sample_b/',
 			array( 'output'=>__DIR__.'/_output2/', 'strip_crlf'=>true )
 		);
-		$this->assertFalse( is_dir( $diffdir->is_error() ) );
+		$this->assertFalse( $diffdir->is_error() );
 		$this->assertTrue( is_dir( $diffdir->get_output_dir() ) );
 
 		clearstatcache();

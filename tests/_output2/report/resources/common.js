@@ -373,14 +373,12 @@ $(window).load(function(){
 		hash = hash.replace(/^\/+/, '');
 
 		hash = './diff/'+hash+'.diff.html';
-		console.log(hash);
+		// console.log(hash);
 		window.diffpreview.location.href = hash;
 	}
 
 	$('.difflist__list').find('a').on('click', function(e){
 		var $this = $(this);
-		// console.log(this.href);
-		// console.log($this.attr('data-path'));
 		window.location.hash = $this.attr('data-path');
 	})
 });
