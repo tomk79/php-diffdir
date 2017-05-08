@@ -24,6 +24,14 @@ for( $i = 0; $i < count($argv); $i ++ ){
 		$conf['output'] = $argv[$i];
 		continue;
 	}
+	if( $argv[$i] == '--readme' ){
+		if( preg_match( '/^\-[a-zA-Z0-9\-\_]+$/s', $argv[$i+1] ) ){
+			continue;
+		}
+		$i++;
+		$conf['readme'] = $argv[$i];
+		continue;
+	}
 	if( $argv[$i] == '--strip-crlf' ){
 		$conf['strip_crlf'] = true;
 		continue;

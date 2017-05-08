@@ -34,7 +34,10 @@ class diffdirTest extends PHPUnit_Framework_TestCase{
 		$diffdir = new \tomk79\diffdir(
 			__DIR__.'/sample_a/',
 			__DIR__.'/sample_b/',
-			array( 'output'=>__DIR__.'/_output1/' )
+			array(
+				'output'=>__DIR__.'/_output1/',
+				'readme'=>__DIR__.'/readme/README1.md',
+			)
 		);
 		$this->assertFalse( $diffdir->is_error() );
 		$this->assertTrue( is_dir( $diffdir->get_output_dir() ) );

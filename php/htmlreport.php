@@ -62,14 +62,17 @@ class htmlreport{
 	<body>
 		<div id="outline" class="outline">
 			<div id="difflist" class="difflist">
+				<div class="btn-group btn-group-justified" role="group" aria-label="...">
+					<div class="btn-group" role="group"><a href="./README.html" data-path="" target="diffpreview" class="btn btn-default">README</a></div>
+				</div>
 				<div class="difflist__btns">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-default" onclick="showAllList();">すべて表示</button>
-						<button type="button" class="btn btn-default" onclick="filterList('>li:not(.changed,.added,.deleted)');">差分のみ</button>
-						<button type="button" class="btn btn-default" onclick="filterList('>li:not(.file)');">ファイルのみ</button>
+					<div class="btn-group btn-group-justified" role="group">
+						<div class="btn-group" role="group"><button type="button" class="btn btn-default" onclick="showAllList();">すべて表示</button></div>
+						<div class="btn-group" role="group"><button type="button" class="btn btn-default" onclick="filterList('>li:not(.changed,.added,.deleted)');">差分のみ</button></div>
+						<div class="btn-group" role="group"><button type="button" class="btn btn-default" onclick="filterList('>li:not(.file)');">ファイルのみ</button></div>
 					</div>
 				</div>
-				<div class="btn-group difflist__list">
+				<div class="difflist__list">
 					<ul><?php
 		$html = ob_get_clean();
 		$this->fs->save_file($this->conf['output'].'/report/index.html', $html);
@@ -93,7 +96,7 @@ class htmlreport{
 				</div>
 			</div>
 			<div id="diffpreview" class="diffpreview">
-				<iframe src="about:blank" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
+				<iframe src="./README.html" name="diffpreview" id="iframe" border="0" frameborder="0"></iframe>
 			</div>
 		</div>
 	</body>
@@ -101,6 +104,43 @@ class htmlreport{
 <?php
 		$html = ob_get_clean();
 		@error_log($html, 3, $this->conf['output'].'/report/index.html');
+		return true;
+	}
+
+	/**
+	 * save diff report README page
+	 */
+	public function save_diff_report_readme_page(){
+		$path_readmeHtml = $this->conf['output'].'/report/README.html';
+		$path_base = $this->fs->get_relatedpath($this->conf['output'].'/report/', dirname($path_readmeHtml));
+		ob_start(); ?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>diffdir - README</title>
+		<script src="<?= htmlspecialchars($path_base); ?>resources/jquery-1.10.1.min.js"></script>
+		<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/bootstrap/css/bootstrap-theme.css" />
+		<script src="<?= htmlspecialchars($path_base); ?>resources/bootstrap/js/bootstrap.js"></script>
+		<link rel="stylesheet" href="<?= htmlspecialchars($path_base); ?>resources/common.css" />
+		<script src="<?= htmlspecialchars($path_base); ?>resources/common.js"></script>
+	</head>
+	<body>
+<div class="container">
+<?php
+if( is_file($this->conf['readme']) ){
+	$src = file_get_contents($this->conf['readme']);
+	$src = \Michelf\MarkdownExtra::defaultTransform($src);
+	echo $src;
+}
+?>
+</div>
+	</body>
+</html>
+<?php
+		$html = ob_get_clean();
+		$this->fs->save_file( $path_readmeHtml, $html );
 		return true;
 	}
 

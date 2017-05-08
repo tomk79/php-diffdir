@@ -41,6 +41,14 @@ $ php ./diffdir.php ./tests/sample_a/ ./tests/sample_b/
 $ php ./diffdir.php -o ./result_sample/ ./tests/sample_a/ ./tests/sample_b/
 ```
 
+#### --readme READMEページを指定する
+
+`--readme` オプションは、HTMLレポートにREADMEページを追加します。
+
+```
+$ php ./diffdir.php -o ./result_sample/ --readme ./path/to/README.md ./tests/sample_a/ ./tests/sample_b/
+```
+
 #### --strip-crlf 改行コードを無視する
 
 `--strip-crlf` オプションをつけて比較すると、改行コードだけの違いは無視されます。
@@ -69,16 +77,17 @@ $ php ./diffdir.php -q ./tests/sample_a/ ./tests/sample_b/
 
 ### PHPスクリプト内で使用する
 
-```
+```php
 <?php
 require_once( './vendor/autoload.php' );
 $diffdir = new tomk79\diffdir(
 	'/path/before/', // path before
 	'/path/after/',  // path after
 	array( // options
-		'output'=>'/path/path_output_dir/', // -o
+		'output'=>'/path/to/path_output_dir/', // -o
+		'readme'=>'/path/to/README.md', // --readme
 		'strip_crlf'=>true, // --strip-crlf
-		'verbose'=>true // -v
+		'verbose'=>true, // -v
 	)
 );
 if( $diffdir->is_error() ){
@@ -103,42 +112,3 @@ MIT License
 - (C)Tomoya Koyanagi <tomk79@gmail.com>
 - website: <http://www.pxt.jp/>
 - Twitter: @tomk79 <http://twitter.com/tomk79/>
-
-
-
-## 付録 - Appendix
-
-### composer のインストール
-
-`composer` のインストール方法について
-詳しくは [composerの公式サイト(英語)](https://getcomposer.org/doc/00-intro.md) を参照してください。
-
-下記は公式サイトからの抜粋です。参考までに。
-
-#### Macの方
-
-Mac の方は、次のコマンドでグローバルインストールできます。
-
-```
-$ curl -sS https://getcomposer.org/installer | php
-$ mv composer.phar /usr/local/bin/composer
-```
-
-#### Windowsの方
-
-Windows の方は、GUIインストーラ Composer-Setup.exe が用意されています。
-次のコマンドでもインストールできますので、お好みの方法でインストールしてください。
-
-```
-$ cd C:\bin
-$ php -r "readfile('https://getcomposer.org/installer');" | php
-```
-
-### 開発者向け情報 - for Developer
-
-#### テスト - Test
-
-```
-$ cd (project directory)
-$ ./vendor/phpunit/phpunit/phpunit php/tests/diffdirTest
-```

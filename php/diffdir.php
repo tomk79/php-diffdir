@@ -12,7 +12,7 @@ namespace tomk79;
  * @author Tomoya Koyanagi <tomk79@gmail.com>
  */
 class diffdir{
-	// $ php ./diffdir.php -o "./_output/" ./php/tests/sample_a/ ./php/tests/sample_b/
+	// $ php ./diffdir.php -o "./_output/" --readme "./path/to/readme.md" "./php/tests/sample_a/" "./php/tests/sample_b/"
 	// $ rm -r _output/
 
 	private $fs;
@@ -39,6 +39,13 @@ class diffdir{
 			$this->conf['output'] = '_report_'.@date('Ymd_His');
 		}
 		$this->conf['output'] = $this->fs->get_realpath( $this->conf['output'] ).DIRECTORY_SEPARATOR;
+
+		if( !@strlen( $this->conf['readme'] ) ){
+			$this->conf['readme'] = null;
+		}
+		if( !is_null( $this->conf['readme'] ) ){
+			$this->conf['readme'] = @realpath($this->conf['readme']);
+		}
 
 		if( !$this->validate() ){
 			return false;
@@ -178,6 +185,9 @@ class diffdir{
 
 		// 差分を知らせるHTMLのindex.html(一覧)を生成
 		$htmlreport->save_diff_report_index_html_footer();
+
+		// READMEページを生成する
+		$htmlreport->save_diff_report_readme_page();
 
 		return true;
 	}
