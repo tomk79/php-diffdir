@@ -1,6 +1,6 @@
-"common",,"dir",,"2017-02-16 17:22:40",,,,"dir",,"2017-02-16 17:22:40",,,
+"common",,"dir",,"2017-02-16 17:22:40",,,,"dir",,"2017-05-08 11:56:42",,,
 "common/book.gif","deleted","file","57995","2015-12-27 06:49:22","938fc97a37e5f21915d087983b535640",,"CRLF/CR/LF",,,"1970-01-01 00:00:00",,,
-"common/changed.gif","changed","file","57995","2015-12-27 06:49:22","938fc97a37e5f21915d087983b535640",,"CRLF/CR/LF","file","4447","2015-12-27 06:49:22","cd668abf396524bdd344986bc1b03fbe",,"CRLF/CR/LF"
+"common/changed.gif","changed","file","57995","2015-12-27 06:49:22","938fc97a37e5f21915d087983b535640",,"CRLF/CR/LF","file","57945","2017-05-08 11:56:42","8910ae2e7611a40415d1b875bb2b9501",,"CRLF/CR/LF"
 "common/equal.jpg",,"file","149600","2015-12-27 06:49:22","7a0885d488b624f39b8b9633511b4e6d",,"CRLF/CR/LF","file","149600","2015-12-27 06:49:22","7a0885d488b624f39b8b9633511b4e6d",,"CRLF/CR/LF"
 "common/include.inc",,"file","63","2014-12-25 13:48:31","c77a5645859496b10a0e6965376814ae","UTF-8","CRLF","file","63","2017-05-07 13:56:59","c77a5645859496b10a0e6965376814ae","UTF-8","CRLF"
 "common/sampleimage.png",,"file","7457","2014-12-25 13:48:31","059128ce26f119b851c054dbae2f686e",,"CRLF/CR/LF","file","7457","2014-12-25 13:48:31","059128ce26f119b851c054dbae2f686e",,"CRLF/CR/LF"
@@ -8,6 +8,7 @@
 "crlf.html","changed","file","61","2000-01-01 00:00:00","6ac2d407ed928804432ecba3ebe75599","ASCII","CRLF/CR/LF","file","63","2000-01-01 00:00:00","706e4eb86ab06f6f1f519f2b96ee2582","ASCII","CRLF"
 "crlf_to_lf.html","changed","file","61","2017-05-07 15:18:22","6ac2d407ed928804432ecba3ebe75599","ASCII","CRLF/CR/LF","file","60","2017-05-07 15:18:22","3d348a6462302f747f4a0ab840d841f7","ASCII","LF"
 "diff.html","changed","file","1069","2017-05-07 15:18:22","de2e19ed19e5a3c2eb9167e302f66b66","UTF-8","CRLF","file","848","2017-05-07 15:18:22","6a4cdf42c0bda78dd03c5ea015f53f20","UTF-8","CRLF"
+"diff_plus.html","changed","file","848","2017-05-08 11:59:53","666998f0305f29b5d2abc7b5237d3177","UTF-8","CRLF","file","1069","2017-05-08 11:59:19","5d1fce518d29af621bf92abb7e97aaef","UTF-8","CRLF"
 "dir_to_file","changed","dir",,"2014-10-07 16:11:16",,,,"file","11","2015-12-26 21:41:22","a8d3b404aff46b071a9f224f04c13197","ASCII","unknown"
 "equal",,"dir",,"2017-02-16 17:10:26",,,,"dir",,"2017-02-16 17:10:26",,,
 "equal/diff.html","changed","file","265","2014-10-07 16:56:41","ff1a718f8b3c1e910d52c7a46ca43765","UTF-8","CRLF","file","265","2014-10-07 16:56:41","f5f2102ce60c6c2a1f3c0affaa09baea","UTF-8","CRLF"

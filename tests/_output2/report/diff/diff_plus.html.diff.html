@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>diff: diff_plus.html</title>
+<meta name="apple-mobile-web-app-capable" content="no" /><meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=1024" />
+<script src="../resources/jquery-1.10.1.min.js"></script>
+<link rel="stylesheet" href="../resources/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="../resources/bootstrap/css/bootstrap-theme.css" />
+<script src="../resources/bootstrap/js/bootstrap.js"></script>
+<link rel="stylesheet" href="../resources/common.css" />
+<script src="../resources/common.js"></script>
+</head>
+<body>
+<div class="theme_outline">
+<h1>diff_plus.html</h1>
+<p>
+<span class="label label-warning">CHANGED</span><span style="width: 10px;"></span>
+<span class="glyphicon glyphicon-file"></span> FILE</p>
+<div class="contents">
+
+<div class="diff-main-view">
+<div class="text-preview"><div class="btn-group text-preview__btns" role="group">	<button type="button" class="btn btn-default" data-text-in="before" onclick="compareTextIn('before');">before</button>	<button type="button" class="btn btn-default" data-text-in="diff_1" onclick="compareTextIn('diff_1');">diff 1</button>	<button type="button" class="btn btn-default" data-text-in="diff_2" onclick="compareTextIn('diff_2');">diff 2</button>	<button type="button" class="btn btn-default" data-text-in="diff_3" onclick="compareTextIn('diff_3');">diff 3</button>	<button type="button" class="btn btn-default" data-text-in="diff_4" onclick="compareTextIn('diff_4');">diff 4</button>	<button type="button" class="btn btn-default" data-text-in="after" onclick="compareTextIn('after');">after</button></div><div class="text-preview__columns">	<div class="text-preview__panel text-preview__before">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff A&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff A&lt;/h1&gt;
+		&lt;p&gt;このファイルはAとBで差分があります ：接尾辞。&lt;/p&gt;
+		&lt;p&gt;甲斐の守護を務めた甲斐源氏武田家第18代・武田信虎の嫡男。先代・信虎期に武田氏は守護大名から戦国大名化し国内統一を達成し、信玄も体制を継承して隣国・信濃に侵攻する。その過程で越後国の上杉謙信（長尾景虎）と五次にわたると言われる川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した。&lt;/p&gt;
+
+		&lt;hr /&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>	</div>	<div class="text-preview__panel text-preview__diff_1">		<div><pre class="textdiff textdiff--inline"><div class="textdiff__row">&lt;!DOCTYPE html&gt;</div><div class="textdiff__row">&lt;html&gt;</div><div class="textdiff__row">	&lt;head&gt;</div><div class="textdiff__row textdiff__row--changed">		&lt;title&gt;Diff <del>A&lt;/title&gt;</del><ins>B&lt;/title&gt;</ins></div><div class="textdiff__row">	&lt;/head&gt;</div><div class="textdiff__row">	&lt;body&gt;</div><div class="textdiff__row textdiff__row--changed">		&lt;h1&gt;Diff <del>A&lt;/h1&gt;</del><ins>B&lt;/h1&gt;</ins></div><div class="textdiff__row textdiff__row--changed">		&lt;p&gt;<ins>接頭辞： </ins>このファイルはAとBで差分があります<del> ：接尾辞</del>。&lt;/p&gt;</div><div class="textdiff__row textdiff__row--changed">		&lt;p&gt;<ins>武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、</ins>甲斐の<del>守護</del><ins>守護大名・戦国大名。甲斐源氏の嫡流にあたる甲斐武田家第19代当主。諱は晴信、通称は太郎（たろう）。「信玄」とは（出家後の）法名で、正式には徳栄軒信玄。1915年（大正4年）11月10日に従三位</ins>を<del>務めた甲斐源氏武田家第18代・武田信虎の嫡男。先代・信虎期に武田氏は守護大名から戦国大名化し国内統一を達成し、信玄も体制を継承して隣国・信濃に侵攻する。その過程で越後国の上杉謙信（長尾景虎）と五次にわたると言われる川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した</del><ins>贈られる</ins>。&lt;/p&gt;</div><div class="textdiff__row"></div><div class="textdiff__row">		&lt;hr /&gt;</div><div class="textdiff__row textdiff__row--changed"><ins>		&lt;h2&gt;信濃国を平定&lt;/h2&gt;		&lt;p&gt;			信虎期の武田氏は敵対している勢力は相模後北条氏のみで、駿河国今川氏、上野国山内上杉氏・扇谷上杉氏、信濃諏訪氏と同盟関係を持ち信虎末期には信濃佐久郡・小県郡への出兵を行っていたが、晴信は家督を相続すると信虎路線からの変更を行い、信濃諏訪領への侵攻を行う[注釈 5]。&lt;br /&gt;		&lt;/p&gt;</ins></div><div class="textdiff__row">	&lt;/body&gt;</div><div class="textdiff__row">&lt;/html&gt;</div><div class="textdiff__row"></div></pre></div>		<p>* このビューは、ライブラリ <code>TextDiff</code> が検出した差分です。</p>	</div>	<div class="text-preview__panel text-preview__diff_2">		<div><div class="textdiff textdiff--inline"><table><tbody><tr class="textdiff__row"><th>1</th><td>&lt;!DOCTYPE html&gt;</td><th>1</th><td>&lt;!DOCTYPE html&gt;</td></tr><tr class="textdiff__row"><th>2</th><td>&lt;html&gt;</td><th>2</th><td>&lt;html&gt;</td></tr><tr class="textdiff__row"><th>3</th><td>	&lt;head&gt;</td><th>3</th><td>	&lt;head&gt;</td></tr><tr class="textdiff__row textdiff__row--changed"><th>4</th><td>		&lt;title&gt;Diff <del>A&lt;/title&gt;</del></td><th>4</th><td>		&lt;title&gt;Diff <ins>B&lt;/title&gt;</ins></td></tr><tr class="textdiff__row"><th>5</th><td>	&lt;/head&gt;</td><th>5</th><td>	&lt;/head&gt;</td></tr><tr class="textdiff__row"><th>6</th><td>	&lt;body&gt;</td><th>6</th><td>	&lt;body&gt;</td></tr><tr class="textdiff__row textdiff__row--changed"><th>7</th><td>		&lt;h1&gt;Diff <del>A&lt;/h1&gt;</del></td><th>7</th><td>		&lt;h1&gt;Diff <ins>B&lt;/h1&gt;</ins></td></tr><tr class="textdiff__row textdiff__row--changed"><th>8</th><td>		&lt;p&gt;このファイルはAとBで差分があります<del> ：接尾辞</del>。&lt;/p&gt;</td><th>8</th><td>		&lt;p&gt;<ins>接頭辞： </ins>このファイルはAとBで差分があります。&lt;/p&gt;</td></tr><tr class="textdiff__row textdiff__row--changed"><th>9</th><td>		&lt;p&gt;甲斐の<del>守護</del>を<del>務めた甲斐源氏武田家第18代・武田信虎の嫡男。先代・信虎期に武田氏は守護大名から戦国大名化し国内統一を達成し、信玄も体制を継承して隣国・信濃に侵攻する。その過程で越後国の上杉謙信（長尾景虎）と五次にわたると言われる川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した</del>。&lt;/p&gt;</td><th>9</th><td>		&lt;p&gt;<ins>武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、</ins>甲斐の<ins>守護大名・戦国大名。甲斐源氏の嫡流にあたる甲斐武田家第19代当主。諱は晴信、通称は太郎（たろう）。「信玄」とは（出家後の）法名で、正式には徳栄軒信玄。1915年（大正4年）11月10日に従三位</ins>を<ins>贈られる</ins>。&lt;/p&gt;</td></tr><tr class="textdiff__row"><th>10</th><td></td><th>10</th><td></td></tr><tr class="textdiff__row"><th>11</th><td>		&lt;hr /&gt;</td><th>11</th><td>		&lt;hr /&gt;</td></tr><tr class="textdiff__row textdiff__row--changed"><th>12</th><td></td><th>12</th><td><ins>		&lt;h2&gt;信濃国を平定&lt;/h2&gt;		&lt;p&gt;			信虎期の武田氏は敵対している勢力は相模後北条氏のみで、駿河国今川氏、上野国山内上杉氏・扇谷上杉氏、信濃諏訪氏と同盟関係を持ち信虎末期には信濃佐久郡・小県郡への出兵を行っていたが、晴信は家督を相続すると信虎路線からの変更を行い、信濃諏訪領への侵攻を行う[注釈 5]。&lt;br /&gt;		&lt;/p&gt;</ins></td></tr><tr class="textdiff__row"><th>13</th><td>	&lt;/body&gt;</td><th>13</th><td>	&lt;/body&gt;</td></tr><tr class="textdiff__row"><th>14</th><td>&lt;/html&gt;</td><th>14</th><td>&lt;/html&gt;</td></tr><tr class="textdiff__row"><th>15</th><td></td><th>15</th><td></td></tr></tbody></table></div></div>		<p>* このビューは、ライブラリ <code>TextDiff</code> が検出した差分です。</p>	</div>	<div class="text-preview__panel text-preview__diff_3">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff <del>A</del><ins>B</ins>&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff <del>A</del><ins>B</ins>&lt;/h1&gt;
+		&lt;p&gt;<ins>接頭辞： </ins>このファイルはAとBで差分があります<del> ：接尾辞</del>。&lt;/p&gt;
+		&lt;p&gt;<ins>武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、</ins>甲斐の守護<ins>大名</ins><ins></ins><del></del>甲斐源氏<ins>の嫡流にあたる甲斐</ins>武田家第1<del>8</del><ins>9</ins>代<del>・武田信虎の</del><del></del><ins></ins>。<del>先代</del><ins>諱</ins><del></del><ins></ins>信<del>虎期</del><ins></ins><del></del><ins>通</ins><del></del><ins></ins><del>氏</del><del></del><ins></ins><del></del><ins></ins><del></del><del></del><ins>）</ins><del></del><ins></ins><del></del><del></del><ins></ins>と<del></del><ins></ins><del></del><ins>家後の）</ins><del></del><ins></ins><ins></ins><del></del><ins>1915年（大正4年）11月10日</ins><del></del><ins></ins><del></del><ins></ins><del></del><ins></ins><del></del><ins></ins>れる<del>川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した</del>。&lt;/p&gt;
+
+		&lt;hr /&gt;
+<ins>		&lt;h2&gt;信濃国を平定&lt;/h2&gt;
+		&lt;p&gt;
+			信虎期の武田氏は敵対している勢力は相模後北条氏のみで、駿河国今川氏、上野国山内上杉氏・扇谷上杉氏、信濃諏訪氏と同盟関係を持ち信虎末期には信濃佐久郡・小県郡への出兵を行っていたが、晴信は家督を相続すると信虎路線からの変更を行い、信濃諏訪領への侵攻を行う[注釈 5]。&lt;br /&gt;
+		&lt;/p&gt;
+</ins>	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>		<p>* このビューは、ライブラリ <code>cogpowered/finediff</code> が検出した差分です。</p>	</div>	<div class="text-preview__panel text-preview__diff_4">		<div><table class="Differences DifferencesSideBySide"><thead><tr><th colspan="2">Old Version</th><th colspan="2">New Version</th></tr></thead><tbody class="ChangeEqual"><tr><th>1</th><td class="Left"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td><th>1</th><td class="Right"><span>&lt;!DOCTYPE html&gt;</span>&nbsp;</td></tr><tr><th>2</th><td class="Left"><span>&lt;html&gt;</span>&nbsp;</td><th>2</th><td class="Right"><span>&lt;html&gt;</span>&nbsp;</td></tr><tr><th>3</th><td class="Left"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td><th>3</th><td class="Right"><span>&nbsp; &nbsp;&lt;head&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>4</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff <del>A</del>&lt;/title&gt;</span>&nbsp;</td><th>4</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;title&gt;Diff <ins>B</ins>&lt;/title&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>5</th><td class="Left"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td><th>5</th><td class="Right"><span>&nbsp; &nbsp;&lt;/head&gt;</span>&nbsp;</td></tr><tr><th>6</th><td class="Left"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td><th>6</th><td class="Right"><span>&nbsp; &nbsp;&lt;body&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeReplace"><tr><th>7</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff <del>A</del>&lt;/h1&gt;</span>&nbsp;</td><th>7</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h1&gt;Diff <ins>B</ins>&lt;/h1&gt;</span></td></tr><tr><th>8</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<del>このファイルはAとBで差分があります ：接尾辞</del>。&lt;/p&gt;</span>&nbsp;</td><th>8</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<ins>接頭辞： このファイルはAとBで差分があります</ins>。&lt;/p&gt;</span></td></tr><tr><th>9</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<del>甲斐の守護を務めた甲斐源氏武田家第18代・武田信虎の嫡男。先代・信虎期に武田氏は守護大名から戦国大名化し国内統一を達成し、信玄も体制を継承して隣国・信濃に侵攻する。その過程で越後国の上杉謙信（長尾景虎）と五次にわたると言われる川中島の戦いで抗争しつつ信濃をほぼ領国化し、甲斐本国に加え信濃、駿河、西上野、遠江、三河と美濃の一部を領し、次代の勝頼期にかけて領国を拡大したものの、西上作戦の途上に三河で病を発し、信濃で病没した</del>。&lt;/p&gt;</span>&nbsp;</td><th>9</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;<ins>武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、甲斐の守護大名・戦国大名。甲斐源氏の嫡流にあたる甲斐武田家第19代当主。諱は晴信、通称は太郎（たろう）。「信玄」とは（出家後の）法名で、正式には徳栄軒信玄。1915年（大正4年）11月10日に従三位を贈られる</ins>。&lt;/p&gt;</span></td></tr></tbody><tbody class="ChangeEqual"><tr><th>10</th><td class="Left"><span></span>&nbsp;</td><th>10</th><td class="Right"><span></span>&nbsp;</td></tr><tr><th>11</th><td class="Left"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;hr /&gt;</span>&nbsp;</td><th>11</th><td class="Right"><span>&nbsp; &nbsp; &nbsp; &nbsp;&lt;hr /&gt;</span>&nbsp;</td></tr></tbody><tbody class="ChangeInsert"><tr><th>&nbsp;</th><td class="Left">&nbsp;</td><th>12</th><td class="Right"><ins>&nbsp; &nbsp; &nbsp; &nbsp;&lt;h2&gt;信濃国を平定&lt;/h2&gt;</ins>&nbsp;</td></tr><tr><th>&nbsp;</th><td class="Left">&nbsp;</td><th>13</th><td class="Right"><ins>&nbsp; &nbsp; &nbsp; &nbsp;&lt;p&gt;</ins>&nbsp;</td></tr><tr><th>&nbsp;</th><td class="Left">&nbsp;</td><th>14</th><td class="Right"><ins>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;信虎期の武田氏は敵対している勢力は相模後北条氏のみで、駿河国今川氏、上野国山内上杉氏・扇谷上杉氏、信濃諏訪氏と同盟関係を持ち信虎末期には信濃佐久郡・小県郡への出兵を行っていたが、晴信は家督を相続すると信虎路線からの変更を行い、信濃諏訪領への侵攻を行う[注釈 5]。&lt;br /&gt;</ins>&nbsp;</td></tr><tr><th>&nbsp;</th><td class="Left">&nbsp;</td><th>15</th><td class="Right"><ins>&nbsp; &nbsp; &nbsp; &nbsp;&lt;/p&gt;</ins>&nbsp;</td></tr></tbody><tbody class="ChangeEqual"><tr><th>12</th><td class="Left"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td><th>16</th><td class="Right"><span>&nbsp; &nbsp;&lt;/body&gt;</span>&nbsp;</td></tr><tr><th>13</th><td class="Left"><span>&lt;/html&gt;</span>&nbsp;</td><th>17</th><td class="Right"><span>&lt;/html&gt;</span>&nbsp;</td></tr><tr><th>14</th><td class="Left"><span></span>&nbsp;</td><th>18</th><td class="Right"><span></span>&nbsp;</td></tr></tbody></table></div>		<p>* このビューは、ライブラリ <code>phpspec/php-diff</code> が検出した差分です。</p>	</div>	<div class="text-preview__panel text-preview__after">		<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;title&gt;Diff B&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;h1&gt;Diff B&lt;/h1&gt;
+		&lt;p&gt;接頭辞： このファイルはAとBで差分があります。&lt;/p&gt;
+		&lt;p&gt;武田 信玄（たけだ しんげん） / 武田 晴信（たけだ はるのぶ）は、戦国時代の武将、甲斐の守護大名・戦国大名。甲斐源氏の嫡流にあたる甲斐武田家第19代当主。諱は晴信、通称は太郎（たろう）。「信玄」とは（出家後の）法名で、正式には徳栄軒信玄。1915年（大正4年）11月10日に従三位を贈られる。&lt;/p&gt;
+
+		&lt;hr /&gt;
+		&lt;h2&gt;信濃国を平定&lt;/h2&gt;
+		&lt;p&gt;
+			信虎期の武田氏は敵対している勢力は相模後北条氏のみで、駿河国今川氏、上野国山内上杉氏・扇谷上杉氏、信濃諏訪氏と同盟関係を持ち信虎末期には信濃佐久郡・小県郡への出兵を行っていたが、晴信は家督を相続すると信虎路線からの変更を行い、信濃諏訪領への侵攻を行う[注釈 5]。&lt;br /&gt;
+		&lt;/p&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>	</div></div></div>
+</div>
+
+<div>
+<table class="table" style="width:100%;">
+	<thead>
+		<tr>
+			<th style="width:20%;">&nbsp;</th>
+			<th style="width:40%;">before</th>
+			<th style="width:40%;">after</th>
+		</tr>
+	</thead>
+	<tr>
+		<th>path</th>
+		<td colspan="2">diff_plus.html</td>
+	</tr>
+	<tr>
+		<th>status</th>
+		<td colspan="2"><span class="label label-warning">CHANGED</span></td>
+	</tr>
+	<tr>
+		<th>type</th>
+					<td><span class="glyphicon glyphicon-file"></span> FILE</td>
+			<td><span class="glyphicon glyphicon-file"></span> FILE</td>
+			</tr>
+	<tr>
+		<th>size</th>
+					<td>848</td>
+			<td>1069</td>
+			</tr>
+	<tr>
+		<th>timestamp</th>
+					<td>2017-05-08 11:59:53</td>
+			<td>2017-05-08 11:59:19</td>
+			</tr>
+	<tr>
+		<th>md5</th>
+					<td>666998f0305f29b5d2abc7b5237d3177</td>
+			<td>5d1fce518d29af621bf92abb7e97aaef</td>
+			</tr>
+	<tr>
+		<th>encoding</th>
+					<td>UTF-8</td>
+			<td>UTF-8</td>
+			</tr>
+	<tr>
+		<th>crlf</th>
+					<td>CRLF</td>
+			<td>CRLF</td>
+			</tr>
+</table>
+</div>
+</div>
+</div>
+</body>
+</html>
