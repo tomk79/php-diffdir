@@ -63,7 +63,7 @@ class htmlreport{
 		<div id="outline" class="outline">
 			<div id="difflist" class="difflist">
 				<div class="btn-group btn-group-justified" role="group" aria-label="...">
-					<div class="btn-group" role="group"><a href="./README.html" data-path="" target="diffpreview" class="btn btn-default">README</a></div>
+					<div class="btn-group" role="group"><a href="./README.html" data-path="" target="diffpreview" class="btn btn-default" onclick="window.location.hash='';">README</a></div>
 				</div>
 				<div class="difflist__btns">
 					<div class="btn-group btn-group-justified" role="group">
@@ -136,6 +136,13 @@ if( is_file($this->conf['readme']) ){
 }
 ?>
 </div>
+<script>
+$(window).on('load', function(){
+	$('a').attr({
+		'target': '_top'
+	})
+})
+</script>
 	</body>
 </html>
 <?php
